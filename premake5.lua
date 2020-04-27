@@ -2,6 +2,9 @@
 workspace "Discretia"
    configurations { "Debug", "Release" }
 
+   
+   flags { "MultiProcessorCompile" }
+
 project "Discretia"
    kind "ConsoleApp"
    language "C++"
