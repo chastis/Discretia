@@ -2,6 +2,7 @@ project "Discretia"
    kind "ConsoleApp"
    language "C++"
    targetdir "bin/%{cfg.buildcfg}"
+   objdir "bin/obj/%{cfg.buildcfg}"
 
    files { "**.hpp", "**.cpp" }
 
