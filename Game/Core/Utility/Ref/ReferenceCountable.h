@@ -12,7 +12,7 @@ template <>
 class CORE_DLL ReferenceCountable<DefaultThreadPolicy>
 {
 private:
-	size_t counter = 0;
+	size_t counter = 1;
 protected:
 	virtual ~ReferenceCountable() = default;
 public:
@@ -29,7 +29,7 @@ class CORE_DLL ReferenceCountable<ThreadSafePolicy>
 private:
 	std::atomic_size_t counter;
 protected:
-	ReferenceCountable() { counter.store(0); }
+	ReferenceCountable() { counter.store(1); }
 	virtual ~ReferenceCountable() = default;
 public:
 	using thread_policy = ThreadSafePolicy;
