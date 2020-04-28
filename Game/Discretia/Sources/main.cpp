@@ -1,23 +1,31 @@
+#include <Core/Utility/Ref/IntrusivePtr.h>
 #include <SFML/Graphics.hpp>
+
+struct Scene : ReferenceCountable<>
+{
+    sf::RenderWindow window;
+    sf::CircleShape shape;
+};
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    IntrusivePtr scene = MakeIntrusive<Scene>();
+    scene->window.create(sf::VideoMode(200, 200), "SFML works!");
+    scene->shape.setRadius(100.f);
+    scene->shape.setFillColor(sf::Color::Green);
 
-    while (window.isOpen())
+    while (scene->window.isOpen())
     {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (scene->window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                window.close();
+                scene->window.close();
         }
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        scene->window.clear();
+        scene->window.draw(scene->shape);
+        scene->window.display();
     }
 
     return 0;

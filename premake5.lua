@@ -3,7 +3,9 @@ workspace "Discretia"
    location "Game"
    configurations { "Debug", "Release" }
    architecture "x64"
+   startproject "Discretia"
    platforms { "Win64" }
+
    flags { "MultiProcessorCompile" }
 
    CPPDIALECT = "C++17"
@@ -23,6 +25,12 @@ workspace "Discretia"
       --TODO(maybe): make this compiler independent
       "{COPY} %{wks.location}/SFML/extlibs/libs-msvc/" .. "x" .. "%{cfg.architecture:sub(-2)} " .. TARGET_DIR,
    }
+
+   filter "system:windows"
+      systemversion "latest"
+      defines {
+         "M42_WINDOWS"
+      }
 
    include "Game/Core"
    include "Game/Discretia"
