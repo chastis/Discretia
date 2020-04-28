@@ -6,8 +6,8 @@
 class UIDManager : public Noncopyable
 {
 public:
-	static CORE_DLL UIDManager Instance;
-	size_t CORE_DLL Register();
+	static CORE_API UIDManager Instance;
+	size_t CORE_API Register();
 private:
 	UIDManager() = default;
 	~UIDManager() = default;

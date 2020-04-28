@@ -2,10 +2,10 @@
 #include <Core/Components/BaseComponent.h>
 #include <Core/Utility/Noncopyable.h>
 #include <Core/CoreDefs.h>
-#include <vector>
 #include <memory>
+#include <vector>
 
-class CORE_DLL Entity : public Noncopyable
+class CORE_API Entity : public Noncopyable
 {
 public:
 
@@ -16,7 +16,7 @@ public:
 		{
 			std::unique_ptr<BaseComponent> newComponent = std::make_unique<T>();
 			newComponent->Init(this);
-			Components.push_back(newComponent);
+			Components.push_back(std::move(newComponent));
 		}
 		else
 		{
@@ -35,6 +35,19 @@ public:
 				return;
 			}
 		}
+	}
+
+	template<class T>
+	T* GetComponent()
+	{
+		for (auto it = Components.begin(); it != Components.end(); ++it)
+		{
+			if (T* component = dynamic_cast<T*>(it->get()))
+			{
+				return component;
+			}
+		}
+		return nullptr;
 	}
 
 	void Init();

@@ -4,7 +4,7 @@
 
 class Entity;
 
-class CORE_DLL BaseComponent
+class CORE_API BaseComponent
 {
 public:
 	void Init(Entity* InOwner);
