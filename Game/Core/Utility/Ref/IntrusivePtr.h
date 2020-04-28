@@ -21,13 +21,7 @@ public:
 		}
 	}
 
-	IntrusivePtr(T *data) : data(data)
-	{
-		if (data)
-		{
-			data->AddRef();
-		}
-	}
+	IntrusivePtr(T *data) : data(data) {}
 
 	IntrusivePtr(const IntrusivePtr &other)
 		: data(other.data)

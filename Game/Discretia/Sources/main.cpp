@@ -10,7 +10,7 @@ struct Scene : ReferenceCountable<>
 int main()
 {
     IntrusivePtr scene = MakeIntrusive<Scene>();
-    scene->window.create(sf::VideoMode(200, 200), "SFML works!");
+    scene->window.create(sf::VideoMode(200, 200), "Discretia");
     scene->shape.setRadius(100.f);
     scene->shape.setFillColor(sf::Color::Green);
 
