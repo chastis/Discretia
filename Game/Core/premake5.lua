@@ -1,6 +1,6 @@
 project "Core"
    location ""
-   kind "StaticLib"
+   kind "SharedLib"
    language "C++"
    cppdialect (CPPDIALECT)
    targetdir (TARGET_DIR)

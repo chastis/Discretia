@@ -1,5 +1,8 @@
 #pragma once
-class Noncopyable
+
+#include <Core/CoreDefs.h>
+
+class CORE_DLL Noncopyable
 {
 	Noncopyable() = default;
 	~Noncopyable() = default;
