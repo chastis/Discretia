@@ -17,6 +17,17 @@ project "Discretia"
    }
 
    links {
+      "opengl32",
+      "freetype",
+      "winmm",
+      "gdi32",
+      "flac",
+      "vorbisenc",
+      "vorbisfile",
+      "vorbis",
+      "ogg",
+      "ws2_32",
+
       "Core"
    }
 
@@ -29,6 +40,13 @@ project "Discretia"
       defines { "DEBUG" }
       symbols "On"
       runtime "Debug"
+      links {
+         "sfml-graphics-d",
+         "sfml-window-d",
+         "sfml-system-d",
+         "sfml-audio-d",
+         "sfml-network-d"
+      }
 
    filter "configurations:Release"
       kind "WindowedApp"
@@ -37,5 +55,10 @@ project "Discretia"
       runtime "Release"
 
       links {
+         "sfml-graphics",
+         "sfml-window",
+         "sfml-system",
+         "sfml-audio",
+         "sfml-network",
          "sfml-main"
       }
