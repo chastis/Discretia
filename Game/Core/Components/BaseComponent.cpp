@@ -1,6 +1,6 @@
 #include <Core/Components/BaseComponent.h>
 
-void BaseComponent::Init(Entity* InOwner)
+void BaseComponent::Init(Entity* inOwner)
 {
-	Owner = InOwner;
+	owner = inOwner;
 }

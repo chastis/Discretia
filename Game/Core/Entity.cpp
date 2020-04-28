@@ -3,6 +3,11 @@
 
 void Entity::Init()
 {
-	UID = UIDManager::Instance.Register();
+	uid = UIDManager::Instance.Register();
+}
+
+size_t Entity::GetUID() const
+{
+	return uid;
 }
 

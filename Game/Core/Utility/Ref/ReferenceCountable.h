@@ -1,15 +1,14 @@
 #pragma once
 
-#include <Core/Utility/policy.h>
+#include <Core/Utility/Policy.h>
 #include <Core/CoreDefs.h>
 #include <atomic>
-#include <cstdint>
 
 template <class = DefaultThreadPolicy>
-class CORE_DLL ReferenceCountable;
+class CORE_API ReferenceCountable;
 
 template <>
-class CORE_DLL ReferenceCountable<DefaultThreadPolicy>
+class CORE_API ReferenceCountable<DefaultThreadPolicy>
 {
 private:
 	size_t counter = 1;
@@ -20,11 +19,11 @@ public:
 public:
 	void AddRef();
 	void Release();
-	size_t Count() const;
+	[[nodiscard]] size_t Count() const;
 };
 
 template<>
-class CORE_DLL ReferenceCountable<ThreadSafePolicy>
+class CORE_API ReferenceCountable<ThreadSafePolicy>
 {
 private:
 	std::atomic_size_t counter;

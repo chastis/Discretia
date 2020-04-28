@@ -1,9 +1,11 @@
 #pragma once
-#include <vector>
-#include <memory>
 #include <Core/Components/BaseComponent.h>
+#include <Core/Utility/Noncopyable.h>
+#include <Core/CoreDefs.h>
+#include <memory>
+#include <vector>
 
-class Entity
+class CORE_API Entity : public Noncopyable
 {
 public:
 
@@ -14,7 +16,7 @@ public:
 		{
 			std::unique_ptr<BaseComponent> newComponent = std::make_unique<T>();
 			newComponent->Init(this);
-			Components.push_back(newComponent);
+			components.push_back(std::move(newComponent));
 		}
 		else
 		{
@@ -25,19 +27,32 @@ public:
 	template<class T>
 	void RemoveComponent()
 	{
-		for (auto it = Components.begin(); it != Components.end(); ++it)
+		for (auto it = components.begin(); it != components.end(); ++it)
 		{
 			if (dynamic_cast<T*>(it->get()))
 			{
-				it = Components.erase(it);
+				it = components.erase(it);
 				return;
 			}
 		}
 	}
 
-	void Init();
+	template<class T>
+	T* GetComponent()
+	{
+		for (auto it = components.begin(); it != components.end(); ++it)
+		{
+			if (T* component = dynamic_cast<T*>(it->get()))
+			{
+				return component;
+			}
+		}
+		return nullptr;
+	}
 
+	void Init();
+	[[nodiscard]] size_t GetUID() const;
 private:
-	std::vector<std::unique_ptr<BaseComponent>> Components;
-	size_t UID = 0;
+	std::vector<std::unique_ptr<BaseComponent>> components;
+	size_t uid = 0;
 };

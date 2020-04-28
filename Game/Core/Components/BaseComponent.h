@@ -1,12 +1,14 @@
 #pragma once
 
+#include <Core/CoreDefs.h>
+
 class Entity;
 
-class BaseComponent
+class CORE_API BaseComponent
 {
 public:
-	void Init(Entity* InOwner);
+	void Init(Entity* inOwner);
 
 private:
-	Entity* Owner = nullptr;
+	Entity* owner = nullptr;
 };
