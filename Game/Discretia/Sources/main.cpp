@@ -1,3 +1,4 @@
+#include <Core/Entity.h>
 #include <Core/Utility/Ref/IntrusivePtr.h>
 #include <SFML/Graphics.hpp>
 
@@ -10,6 +11,8 @@ struct Scene : ReferenceCountable<>
 int main()
 {
     IntrusivePtr scene = MakeIntrusive<Scene>();
+	Entity a;
+	a.Init();
     scene->window.create(sf::VideoMode(200, 200), "SFML works!");
     scene->shape.setRadius(100.f);
     scene->shape.setFillColor(sf::Color::Green);

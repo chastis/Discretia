@@ -1,8 +1,10 @@
 #pragma once
 
+#include <Core/CoreDefs.h>
+
 class Entity;
 
-class BaseComponent
+class CORE_DLL BaseComponent
 {
 public:
 	void Init(Entity* InOwner);

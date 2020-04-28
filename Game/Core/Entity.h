@@ -1,9 +1,11 @@
 #pragma once
+#include <Core/Components/BaseComponent.h>
+#include <Core/Utility/Noncopyable.h>
+#include <Core/CoreDefs.h>
 #include <vector>
 #include <memory>
-#include <Core/Components/BaseComponent.h>
 
-class Entity
+class CORE_DLL Entity : public Noncopyable
 {
 public:
 
