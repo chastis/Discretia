@@ -1,6 +1,7 @@
-#include <Core/Components/BaseComponent.h>
+#include <Core/Singletons/UIDManager.h>
 
-void BaseComponent::Init(Entity* InOwner)
+size_t UIDManager::Register()
 {
-	Owner = InOwner;
+	return NextUID++;
 }
+

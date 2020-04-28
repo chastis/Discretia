@@ -35,6 +35,8 @@ public:
 		}
 	}
 
+	void Init();
+
 private:
 	std::vector<std::unique_ptr<BaseComponent>> Components;
 	size_t UID = 0;
