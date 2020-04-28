@@ -1,13 +1,20 @@
-project "Discretia"
-   kind "ConsoleApp"
+project "Core"
+   location ""
+   kind "StaticLib"
    language "C++"
-   cppdialect "C++17"
+   cppdialect (CPPDIALECT)
    targetdir (TARGET_DIR)
    objdir (OUTPUT_DIR .. "/%{prj.name}")
 
-   files { "**.hpp", "**.cpp" }
+   files 
+   {
+      "**.cpp"
+      , "**.h"
+   }
 
-   includedirs {
+   includedirs
+   {
+      INCLUDE_PATHS.ROOT,
       INCLUDE_PATHS.SFML
    }
    libdirs {
@@ -24,7 +31,11 @@ project "Discretia"
       "vorbisfile",
       "vorbis",
       "ogg",
-      "ws2_32"
+      "ws2_32",
+   }
+
+   defines {
+        "M42_CORE"
    }
 
    filter "configurations:Debug"
@@ -32,7 +43,7 @@ project "Discretia"
       symbols "On"
       runtime "Debug"
 
-      links {    
+      links {
          "sfml-graphics-d",
          "sfml-window-d",
          "sfml-system-d",
@@ -41,7 +52,7 @@ project "Discretia"
       }
 
    filter "configurations:Release"
-      defines { "NDEBUG" }
+      defines { "NDEBUG", "RELEASE"}
       optimize "On"
       runtime "Release"
       links {    
