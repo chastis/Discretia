@@ -1,4 +1,4 @@
-#include <Core/Entity.h>
+#include <Core/Singletons/EntityManager.h>
 #include <Core/Utility/Ref/IntrusivePtr.h>
 #include <SFML/Graphics.hpp>
 
@@ -10,6 +10,7 @@ struct Scene : ReferenceCountable<>
 
 int main()
 {
+	EntityManager::Instance.CreateEntity();
     IntrusivePtr scene = MakeIntrusive<Scene>();
     scene->window.create(sf::VideoMode(200, 200), "Discretia");
     scene->shape.setRadius(100.f);

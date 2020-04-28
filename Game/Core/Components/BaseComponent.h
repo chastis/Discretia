@@ -7,8 +7,8 @@ class Entity;
 class CORE_API BaseComponent
 {
 public:
-	void Init(Entity* InOwner);
+	void Init(Entity* inOwner);
 
 private:
-	Entity* Owner = nullptr;
+	Entity* owner = nullptr;
 };

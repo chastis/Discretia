@@ -2,6 +2,7 @@
 
 class Nonmoveable
 {
+public:
 	Nonmoveable() = default;
 	~Nonmoveable() = default;
 	Nonmoveable(const Nonmoveable&) = default;
