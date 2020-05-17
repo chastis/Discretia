@@ -7,11 +7,11 @@
 class CORE_API DrawableComponent : public BaseComponent
 {
 public:
-	void SetSprite(const sf::Texture& texture, const size_t newZIndex = 0);
-	void SetSpriteFrame(const sf::IntRect& rect);
-	const sf::Sprite& GetSprite() const;
-	size_t GetZIndex() const;
+    void SetSprite(const sf::Texture& texture, const size_t newZIndex = 0);
+    void SetSpriteFrame(const sf::IntRect& rect);
+    const sf::Sprite& GetSprite() const;
+    size_t GetZIndex() const;
 private:
-	sf::Sprite sprite;
-	size_t zIndex = 0;
+    sf::Sprite sprite;
+    size_t zIndex = 0;
 };

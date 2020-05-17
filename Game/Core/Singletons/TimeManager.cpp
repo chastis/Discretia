@@ -4,22 +4,22 @@ TimeManager TimeManager::Instance;
 
 void TimeManager::Update()
 {
-	deltaTime = frameTimer.getElapsedTime();
-	frameTimer.restart();
+    deltaTime = frameTimer.getElapsedTime();
+    frameTimer.restart();
 }
 
 void TimeManager::RestartGameTimer()
 {
-	gameTimer.restart();
+    gameTimer.restart();
 }
 
 sf::Time TimeManager::GetGameTime() const
 {
-	return gameTimer.getElapsedTime();
+    return gameTimer.getElapsedTime();
 }
 
 sf::Time TimeManager::GetDeltaTime() const
 {
-	return deltaTime;
+    return deltaTime;
 }
 

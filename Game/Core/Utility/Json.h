@@ -8987,12 +8987,12 @@ class parser
                                                         exception_message(token_type::uninitialized, "value")));
                     }
 
-					// {M42
-					/*case token_type::end_of_input:
-					{
-						return false;
-					}*/
-					// }
+                    // {M42
+                    /*case token_type::end_of_input:
+                    {
+                        return false;
+                    }*/
+                    // }
 
                     default: // the last token was unexpected
                     {

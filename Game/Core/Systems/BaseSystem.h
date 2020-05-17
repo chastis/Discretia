@@ -7,6 +7,6 @@
 class CORE_API BaseSystem : public Noncopyable, public Nonmoveable
 {
 public:
-	virtual void Update(float deltaTime) = 0;
-	virtual ~BaseSystem() = default;
+    virtual void Update(float deltaTime) = 0;
+    virtual ~BaseSystem() = default;
 };

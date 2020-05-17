@@ -9,9 +9,9 @@
 class Application : public Noncopyable, public Nonmoveable
 {
 public:
-	Application() = default;
-	~Application() = default;
-	CORE_API void Init();
+    Application() = default;
+    ~Application() = default;
+    CORE_API void Init();
 private:
-	sf::RenderWindow window;
+    sf::RenderWindow window;
 };

@@ -6,5 +6,5 @@
 
 class CORE_API TransformComponent : public BaseComponent, public sf::Transformable
 {
-	
+    
 };
