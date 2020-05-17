@@ -7,6 +7,6 @@
 void Application::Init()
 {
     PrototypeManager::Instance.Init();
-    ApplicationPrototype def = BasePrototypes<ApplicationPrototype>::GetDefault();
+    ApplicationPrototype def = ApplicationPrototypes::GetDefault();
     std::cout << def.GetSID();
 }

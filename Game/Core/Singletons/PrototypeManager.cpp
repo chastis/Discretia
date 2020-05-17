@@ -9,3 +9,5 @@ void PrototypeManager::Init()
     applicationPrototypes->Init("ApplicationPrototypes");
     //prototypes.push_back(std::move(applicationPrototypes));
 }
+
+PrototypeManager::~PrototypeManager() {}

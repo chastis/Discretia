@@ -10,7 +10,7 @@
 class BasePrototype
 {
 public:
-    [[nodiscard]] long long GetID() const
+    [[nodiscard]] size_t GetID() const
     {
         return id;
     }
@@ -43,17 +43,20 @@ template <class T>
 class BasePrototypes : public Noncopyable
 {
 public:
-    void Init(std::string filePath);
+    void Init(const std::string& filePath);
     static const std::vector<T>& GetPrototypes();
     static const T& GetDefault();
     static size_t Size();
 
 protected:
-    inline static std::vector<T> prototypes{};
+    static std::vector<T> prototypes;
 };
 
 template <class T>
-void BasePrototypes<T>::Init(std::string filePath)
+std::vector<T> BasePrototypes<T>::prototypes;
+
+template <class T>
+void BasePrototypes<T>::Init(const std::string& filePath)
 {
     const std::string fullPath = Const::EngineConfigPath + filePath + Const::ConfigExt;
     std::ifstream file(fullPath);
@@ -91,5 +94,4 @@ size_t BasePrototypes<T>::Size()
 {
     return prototypes.size();
 }
-
 

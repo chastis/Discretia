@@ -18,6 +18,6 @@ public:
     CORE_API static PrototypeManager Instance;
 private:
     PrototypeManager() = default;
-    ~PrototypeManager() = default;
+    ~PrototypeManager();
     std::vector<std::unique_ptr<BasePrototypes<BasePrototype>>> prototypes;
 };
