@@ -1,4 +1,5 @@
 #include <Core/Singletons/EntityManager.h>
+#include <Core/Singletons/Application.h>
 #include <Core/Utility/Ref/IntrusivePtr.h>
 #include <SFML/Graphics.hpp>
 
@@ -12,6 +13,10 @@ int main()
 {
 	EntityManager::Instance.CreateEntity();
     IntrusivePtr scene = MakeIntrusive<Scene>();
+
+	Application discretia;
+	discretia.Init();
+
     scene->window.create(sf::VideoMode(200, 200), "Discretia");
     scene->shape.setRadius(100.f);
     scene->shape.setFillColor(sf::Color::Green);
