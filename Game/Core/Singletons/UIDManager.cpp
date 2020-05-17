@@ -4,6 +4,6 @@ UIDManager UIDManager::Instance;
 
 size_t UIDManager::Register()
 {
-	return nextUID++;
+    return nextUID++;
 }
 

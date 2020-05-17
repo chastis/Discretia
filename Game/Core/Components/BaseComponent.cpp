@@ -2,5 +2,5 @@
 
 void BaseComponent::Init(Entity* inOwner)
 {
-	owner = inOwner;
+    owner = inOwner;
 }

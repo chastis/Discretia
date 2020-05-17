@@ -14,10 +14,10 @@ class BasePrototype;
 class PrototypeManager : public Noncopyable, public Nonmoveable
 {
 public:
-	CORE_API void Init();
-	CORE_API static PrototypeManager Instance;
+    CORE_API void Init();
+    CORE_API static PrototypeManager Instance;
 private:
-	PrototypeManager() = default;
-	~PrototypeManager() = default;
-	std::vector<std::unique_ptr<BasePrototypes<BasePrototype>>> prototypes;
+    PrototypeManager() = default;
+    ~PrototypeManager() = default;
+    std::vector<std::unique_ptr<BasePrototypes<BasePrototype>>> prototypes;
 };

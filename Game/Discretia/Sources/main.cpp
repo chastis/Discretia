@@ -11,11 +11,11 @@ struct Scene : ReferenceCountable<>
 
 int main()
 {
-	EntityManager::Instance.CreateEntity();
+    EntityManager::Instance.CreateEntity();
     IntrusivePtr scene = MakeIntrusive<Scene>();
 
-	Application discretia;
-	discretia.Init();
+    Application discretia;
+    discretia.Init();
 
     scene->window.create(sf::VideoMode(200, 200), "Discretia");
     scene->shape.setRadius(100.f);

@@ -7,10 +7,10 @@
 class UIDManager : public Noncopyable, public Nonmoveable
 {
 public:
-	CORE_API static UIDManager Instance;
-	CORE_API size_t Register();
+    CORE_API static UIDManager Instance;
+    CORE_API size_t Register();
 private:
-	UIDManager() = default;
-	~UIDManager() = default;
-	size_t nextUID = 0;
+    UIDManager() = default;
+    ~UIDManager() = default;
+    size_t nextUID = 0;
 };
