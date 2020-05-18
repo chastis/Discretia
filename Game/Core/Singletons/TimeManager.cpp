@@ -1,6 +1,9 @@
 #include <Core/Singletons/TimeManager.h>
 
-TimeManager TimeManager::Instance;
+void TimeManager::Init()
+{
+    RestartGameTimer();
+}
 
 void TimeManager::Update()
 {

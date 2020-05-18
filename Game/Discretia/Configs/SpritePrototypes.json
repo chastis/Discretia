@@ -1,0 +1,12 @@
+{
+	"vpsh": {
+		"id": 0,
+		"texture": "vpsh",
+		"rect" : {
+			"left": 0,
+			"top": 0,
+			"height": 503,
+			"width": 512
+		}
+	}
+}

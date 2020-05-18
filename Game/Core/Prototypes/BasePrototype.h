@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <memory>
 
 class BasePrototype
 {
@@ -22,16 +23,16 @@ public:
     {
         return id == prototype.id;
     }
-    virtual bool Init(const nlohmann::json& node)
+    virtual bool Init(nlohmann::json::iterator nodeIt)
     {
-        if (!node.contains("id")
-            || !node.contains("sid"))
+        nlohmann::json node = nodeIt.value();
+        if (!node.contains("id"))
         {
             __debugbreak();
             return false;
         }
         id = node.at("id").get<size_t>();
-        sid = node["sid"].get<std::string>();
+        sid = nodeIt.key();
         return true;
     }
 protected:
@@ -43,40 +44,38 @@ template <class T>
 class BasePrototypes : public Noncopyable
 {
 public:
-    void Init(const std::string& filePath);
-    static const std::vector<T>& GetPrototypes();
+    static void Init(const std::string& filePath);
     static const T& GetDefault();
+    static const T& Get(size_t inID);
+    static const T& Get(const std::string& inSID);
     static size_t Size();
 
 protected:
-    static std::vector<T> prototypes;
+    static std::vector<std::unique_ptr<T>> prototypes;
 };
 
 template <class T>
-std::vector<T> BasePrototypes<T>::prototypes;
+std::vector<std::unique_ptr<T>> BasePrototypes<T>::prototypes;
 
 template <class T>
 void BasePrototypes<T>::Init(const std::string& filePath)
 {
-    const std::string fullPath = Const::EngineConfigPath + filePath + Const::ConfigExt;
+    const std::string fullPath = CoreConst::EngineConfigPath + filePath + CoreConst::ConfigExt;
     std::ifstream file(fullPath);
     
     nlohmann::json j = nlohmann::json::parse(file);
     prototypes.reserve(j.size());
-    for (const auto& node : j)
+    for (auto node = j.begin(); node != j.end(); ++node)
     {
-        T newPrototype;
-        if (newPrototype.Init(node))
+        auto a = j.begin().key();
+        std::unique_ptr<T> newPrototype = std::make_unique<T>();
+        if (newPrototype && newPrototype->Init(node))
         {
-            prototypes.emplace_back(newPrototype);
+            prototypes.emplace_back(std::move(newPrototype));
         }
     }
-}
 
-template <class T>
-const std::vector<T>& BasePrototypes<T>::GetPrototypes()
-{
-    return prototypes;
+    file.close();
 }
 
 template <class T>
@@ -84,9 +83,39 @@ const T& BasePrototypes<T>::GetDefault()
 {
     if (prototypes.size() == 0)
     {
-        prototypes.push_back(T());
+        std::unique_ptr<T> defaultPrototype = std::make_unique<T>();
+        prototypes.push_back(std::move(defaultPrototype));
     }
-    return prototypes[0];
+    return *prototypes[0];
+}
+
+template <class T>
+const T& BasePrototypes<T>::Get(size_t inID)
+{
+    if (inID >=0 && inID < prototypes.size())
+    {
+        //auto basePrototype = static_cast<BasePrototype*>((prototypes[inID]);
+        if (prototypes[inID] && prototypes[inID]->GetID()==inID)
+        {
+            return *prototypes[inID];
+        }
+    }
+    __debugbreak();
+    return GetDefault();
+}
+
+template <class T>
+const T& BasePrototypes<T>::Get(const std::string& inSID)
+{
+    for (const auto& el : prototypes)
+    {
+        if (el && el->GetSID() == inSID)
+        {
+            return *el;
+        }
+    }
+    __debugbreak();
+    return GetDefault();
 }
 
 template <class T>

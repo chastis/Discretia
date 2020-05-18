@@ -1,13 +1,11 @@
 #include <Core/Singletons/PrototypeManager.h>
 #include <Core/Prototypes/ApplicationPrototype.h>
-
-PrototypeManager PrototypeManager::Instance;
+#include <Core/Prototypes/TexturePrototype.h>
+#include <Core/Prototypes/SpritePrototype.h>
 
 void PrototypeManager::Init()
 {
-    std::unique_ptr<ApplicationPrototypes> applicationPrototypes = std::make_unique<ApplicationPrototypes>();
-    applicationPrototypes->Init("ApplicationPrototypes");
-    //prototypes.push_back(std::move(applicationPrototypes));
+    ApplicationPrototypes::Init("ApplicationPrototypes");
+    TexturePrototypes::Init("TexturePrototypes");
+    SpritePrototypes::Init("SpritePrototypes");
 }
-
-PrototypeManager::~PrototypeManager() {}

@@ -8,6 +8,7 @@ class CORE_API BaseComponent
 {
 public:
     void Init(Entity* inOwner);
+    virtual  ~BaseComponent() = default;
 
 private:
     Entity* owner = nullptr;

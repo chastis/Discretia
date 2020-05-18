@@ -31,6 +31,10 @@ workspace "Discretia"
       defines {
          "M42_WINDOWS"
       }
-
+   filter "configurations:Release"
+      postbuildcommands {
+         "{COPY} %{wks.location}/Discretia/Content " .. TARGET_DIR .. "/Content",
+         "{COPY} %{wks.location}/Discretia/Configs " .. TARGET_DIR .. "/Configs"
+      }
    include "Game/Core"
    include "Game/Discretia"
