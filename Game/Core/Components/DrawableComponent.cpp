@@ -9,4 +9,5 @@ void DrawableComponent::IniFromPrototype(const SpritePrototype& spritePrototype)
         setTexture(*newTexture);
     }
     setTextureRect(spritePrototype.getRect());
+    setScale(spritePrototype.getScale());
 }

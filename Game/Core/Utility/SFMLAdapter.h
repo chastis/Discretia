@@ -5,6 +5,7 @@
 
 namespace sf
 {
+    // IntRect
 
     inline void to_json(nlohmann::json& j, const sf::IntRect& rect) 
     {
@@ -18,4 +19,18 @@ namespace sf
         j.at("height").get_to(rect.height);
         j.at("width").get_to(rect.width);
     }
-} // namespace ns
+
+    // Vector2f
+
+    inline void to_json(nlohmann::json& j, const sf::Vector2f& vec) 
+    {
+        j = nlohmann::json{{"x", vec.x}, {"y", vec.y}};
+    }
+
+    inline void from_json(const nlohmann::json& j, sf::Vector2f& vec) 
+    {
+        j.at("x").get_to(vec.x);
+        j.at("y").get_to(vec.y);
+    }
+
+} // namespace sf

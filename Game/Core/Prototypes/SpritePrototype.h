@@ -15,13 +15,15 @@ public:
         {
             const nlohmann::json& node = nodeIt.value();
             if (!node.contains("texture")
-                ||!node.contains("rect"))
+                ||!node.contains("rect")
+                ||!node.contains("scale"))
             {
                 __debugbreak();
                 return false;
             }
             textureSID = node.at("texture").get<std::string>();
             rect = node.at("rect").get<sf::IntRect>();
+            scale = node.at("scale").get<sf::Vector2f>();
             return true;
         }
         return false;
@@ -34,9 +36,14 @@ public:
     {
         return rect;
     }
+    [[nodiscard]] const sf::Vector2f& getScale() const
+    {
+        return scale;
+    }
 protected:
     std::string textureSID;
     sf::IntRect rect;
+    sf::Vector2f scale;
 
 };
 
