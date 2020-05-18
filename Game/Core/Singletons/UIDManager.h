@@ -1,16 +1,13 @@
 #pragma once
 
-#include <Core/Utility/Noncopyable.h>
-#include <Core/Utility/Nonmoveable.h>
+#include <Core/Singletons/BaseSingleton.h>
 #include <Core/CoreDefs.h>
 
-class UIDManager : public Noncopyable, public Nonmoveable
+class CORE_API UIDManager : public BaseSingleton<UIDManager>
 {
 public:
-    CORE_API static UIDManager Instance;
-    CORE_API size_t Register();
+    void Init() override;
+    size_t Register();
 private:
-    UIDManager() = default;
-    ~UIDManager() = default;
     size_t nextUID = 0;
 };

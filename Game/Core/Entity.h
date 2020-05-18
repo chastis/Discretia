@@ -10,18 +10,20 @@ class CORE_API Entity : public Noncopyable
 public:
 
     template<class T>
-    void AddComponent()
+    T* AddComponent()
     {
         if constexpr (std::is_base_of<BaseComponent, T>::value)
         {
             std::unique_ptr<BaseComponent> newComponent = std::make_unique<T>();
             newComponent->Init(this);
             components.push_back(std::move(newComponent));
+            return dynamic_cast<T*>(components.back().get());
         }
         else
         {
             static_assert(false, "T must inherit BaseComponent!");
         }
+        return  nullptr;
     }
 
     template<class T>

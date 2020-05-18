@@ -1,6 +1,9 @@
 #include <Core/Singletons/UIDManager.h>
 
-UIDManager UIDManager::Instance;
+void UIDManager::Init()
+{
+
+}
 
 size_t UIDManager::Register()
 {

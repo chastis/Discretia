@@ -1,38 +1,13 @@
-#include <Core/Singletons/EntityManager.h>
-#include <Core/Singletons/Application.h>
-#include <Core/Utility/Ref/IntrusivePtr.h>
-#include <SFML/Graphics.hpp>
-
-struct Scene : ReferenceCountable<>
-{
-    sf::RenderWindow window;
-    sf::CircleShape shape;
-};
+#include <Core/Application.h>
 
 int main()
 {
-    EntityManager::Instance.CreateEntity();
-    IntrusivePtr scene = MakeIntrusive<Scene>();
-
     Application discretia;
     discretia.Init();
 
-    scene->window.create(sf::VideoMode(200, 200), "Discretia");
-    scene->shape.setRadius(100.f);
-    scene->shape.setFillColor(sf::Color::Green);
-
-    while (scene->window.isOpen())
+    while (discretia.IsRunning())
     {
-        sf::Event event;
-        while (scene->window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                scene->window.close();
-        }
-
-        scene->window.clear();
-        scene->window.draw(scene->shape);
-        scene->window.display();
+        discretia.Update();
     }
 
     return 0;

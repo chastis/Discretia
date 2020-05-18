@@ -1,22 +1,13 @@
 #include <Core/Components/DrawableComponent.h>
+#include <Core/Singletons/AssetManager.h>
 
-void DrawableComponent::SetSprite(const sf::Texture& texture, const size_t newZIndex)
+void DrawableComponent::IniFromPrototype(const SpritePrototype& spritePrototype)
 {
-    sprite.setTexture(texture);
-    zIndex = newZIndex;
-}
-
-void DrawableComponent::SetSpriteFrame(const sf::IntRect& rect)
-{
-    sprite.setTextureRect(rect);
-}
-
-const sf::Sprite& DrawableComponent::GetSprite() const
-{
-    return sprite;
-}
-
-size_t DrawableComponent::GetZIndex() const
-{
-    return zIndex;
+    sf::Texture* newTexture = AssetManager::GetInstance().GetTexture(spritePrototype.getTextureSID());
+    if (newTexture)
+    {
+        setTexture(*newTexture);
+    }
+    setTextureRect(spritePrototype.getRect());
+    setScale(spritePrototype.getScale());
 }

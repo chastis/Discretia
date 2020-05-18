@@ -1,11 +1,9 @@
 #pragma once
 
-#include <Core/CoreDefs.h>
-
-namespace Const
+namespace CoreConst
 {
-    //constexpr uint16_t DefaultApplicationSize = 300;
     constexpr char DefaultApplicationName[] = "Application";
-    constexpr char EngineConfigPath[] = "../Core/Configs/";
+    constexpr char EngineConfigPath[] = "../Discretia/Configs/";
+    constexpr char EngineContentPath[] = "../Discretia/Content/";
     constexpr char ConfigExt[] = ".json";
 }
