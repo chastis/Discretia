@@ -9,7 +9,6 @@ class CORE_API BaseComponent
 public:
     virtual void Init(Entity* inOwner);
     virtual  ~BaseComponent() = default;
-
 protected:
     Entity* owner = nullptr;
 };

@@ -4,7 +4,7 @@
 #include <Core/Entity.h>
 #include <Core/Interfaces/UIDInterface.h>
 
-EventReceiver::EventReceiver(std::string&& inSid, ChannelEventType inChannelType, EventCaller* eventCaller) : sid(std::move(inSid)), channelType(inChannelType), ownerEventCaller(eventCaller)
+EventReceiver::EventReceiver(const std::string& inSid, ChannelEventType inChannelType, EventCaller* eventCaller) : sid(inSid), channelType(inChannelType), ownerEventCaller(eventCaller)
 {}
 
 const std::string& EventReceiver::GetSid() const

@@ -3,7 +3,6 @@
 #include <Core/EventSystem/EventCaller.h>
 #include <Core/EventSystem/EventDispatcher.h>
 #include <Core/Prototypes/ApplicationPrototype.h>
-#include <Core/Interfaces/UIDInterface.h>
 #include <Core/Utility/Noncopyable.h>
 #include <Core/Utility/Nonmoveable.h>
 #include <Core/CoreDefs.h>
@@ -18,6 +17,9 @@ public:
     [[nodiscard]] bool IsRunning() const;
     void Run();
     void Update();
+
+    [[nodiscard]] EventDispatcher& GetEventDispatcher();
+    [[nodiscard]] const sf::RenderWindow& GetWindow() const;
 private:
     EventDispatcher eventDispatcher;
     sf::RenderWindow window;

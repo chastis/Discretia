@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Core/Factories/ComponentFactory.h>
 #include <Core/EventSystem/EventCaller.h>
 #include <Core/Interfaces/UIDInterface.h>
 #include <Core/Interfaces/PrototypeableInterface.h>
@@ -21,16 +22,20 @@ public:
     {
         if constexpr (std::is_base_of<BaseComponent, T>::value)
         {
-            std::unique_ptr<BaseComponent> newComponent = std::make_unique<T>();
-            newComponent->Init(this);
-            components.push_back(std::move(newComponent));
-            return dynamic_cast<T*>(components.back().get());
+            const auto newBaseComponent = ComponentFactory::GetInstance().CreateComponent(typeid(T));
+            return dynamic_cast<T*>(InitComponent(newBaseComponent));
         }
         else
         {
             static_assert(false, "T must inherit BaseComponent!");
         }
         return  nullptr;
+    }
+
+    BaseComponent* AddComponent(const std::string& componentType)
+    {
+        const auto newBaseComponent = ComponentFactory::GetInstance().CreateComponent(componentType);
+        return InitComponent(newBaseComponent);
     }
 
     template<class T>
@@ -62,4 +67,12 @@ public:
     void Init();
 private:
     std::vector<std::unique_ptr<BaseComponent>> components;
+
+    BaseComponent* InitComponent(BaseComponent* baseComponent)
+    {
+        std::unique_ptr<BaseComponent> newComponent(baseComponent);
+        newComponent->Init(this);
+        components.push_back(std::move(newComponent));
+        return components.back().get();
+    }
 };

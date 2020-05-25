@@ -13,7 +13,7 @@ class EventCaller;
 class CORE_API EventReceiver
 {
 public:
-    EventReceiver(std::string&& inSid, ChannelEventType inChannelType, EventCaller* eventCaller);
+    EventReceiver(const std::string& inSid, ChannelEventType inChannelType, EventCaller* eventCaller);
 
     virtual ~EventReceiver() = default;
     [[nodiscard]] const std::string& GetSid() const;
