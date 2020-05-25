@@ -1,13 +1,20 @@
 #pragma once
+
+#include <Core/EventSystem/EventCaller.h>
+#include <Core/Interfaces/UIDInterface.h>
+#include <Core/Interfaces/PrototypeableInterface.h>
+#include <Core/Prototypes/EntityPrototype.h>
 #include <Core/Components/BaseComponent.h>
 #include <Core/Utility/Noncopyable.h>
 #include <Core/CoreDefs.h>
 #include <memory>
 #include <vector>
 
-class CORE_API Entity : public Noncopyable
+class CORE_API Entity : public Noncopyable,  public PrototypeableInterface<EntityPrototype>, public UIDInterface, public EventCaller
 {
 public:
+    void InitFromPrototype() override;
+    void InitEventFunctions() override;
 
     template<class T>
     T* AddComponent()
@@ -42,9 +49,9 @@ public:
     template<class T>
     T* GetComponent()
     {
-        for (auto it = components.begin(); it != components.end(); ++it)
+        for (auto& it : components)
         {
-            if (T* component = dynamic_cast<T*>(it->get()))
+            if (T* component = dynamic_cast<T*>(it.get()))
             {
                 return component;
             }
@@ -53,8 +60,6 @@ public:
     }
 
     void Init();
-    [[nodiscard]] size_t GetUID() const;
 private:
     std::vector<std::unique_ptr<BaseComponent>> components;
-    size_t uid = 0;
 };

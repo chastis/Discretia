@@ -10,7 +10,7 @@ class CORE_API AssetManager : public BaseSingleton<AssetManager>
 {
 public:
     void Init() override;
-    sf::Texture* GetTexture(const std::string& sid) const;
+    [[nodiscard]] sf::Texture* GetTexture(const std::string& sid) const;
 private:
     std::map<std::string, std::unique_ptr<sf::Texture>> textures;
 };

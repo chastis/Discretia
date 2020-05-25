@@ -1,13 +1,20 @@
 #include <Core/Components/DrawableComponent.h>
 #include <Core/Singletons/AssetManager.h>
 
-void DrawableComponent::IniFromPrototype(const SpritePrototype& spritePrototype)
+void DrawableComponent::InitFromPrototype()
 {
-    sf::Texture* newTexture = AssetManager::GetInstance().GetTexture(spritePrototype.getTextureSID());
-    if (newTexture)
+    if (prototype)
     {
-        setTexture(*newTexture);
+        sf::Texture* newTexture = AssetManager::GetInstance().GetTexture(prototype->getTextureSID());
+        if (newTexture)
+        {
+            setTexture(*newTexture);
+        }
+        setTextureRect(prototype->getRect());
+        setScale(prototype->getScale());
     }
-    setTextureRect(spritePrototype.getRect());
-    setScale(spritePrototype.getScale());
+    else
+    {
+        __debugbreak();
+    }
 }
