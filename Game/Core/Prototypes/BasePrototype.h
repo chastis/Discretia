@@ -8,6 +8,9 @@
 #include <fstream>
 #include <memory>
 
+template <class T>
+class BasePrototypes;
+
 class BasePrototype
 {
 public:
@@ -73,6 +76,7 @@ void BasePrototypes<T>::Init(const std::string& filePath)
         {
             prototypes.emplace_back(std::move(newPrototype));
         }
+        
     }
 
     file.close();

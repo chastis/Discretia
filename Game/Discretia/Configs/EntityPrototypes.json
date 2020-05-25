@@ -1,0 +1,16 @@
+{
+	"vpsh": 
+	{
+		"id": 0,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent" 
+		],
+		"events" :
+		[
+			[ 4, "move" ]
+		]
+	}
+}

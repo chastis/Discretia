@@ -3,7 +3,8 @@
 int main()
 {
     Application discretia;
-    discretia.Init();
+    discretia.InitFromPrototype();
+    discretia.Run();
 
     while (discretia.IsRunning())
     {
