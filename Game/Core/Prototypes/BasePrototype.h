@@ -67,14 +67,19 @@ void BasePrototypes<T>::Init(const std::string& filePath)
     std::ifstream file(fullPath);
     
     nlohmann::json j = nlohmann::json::parse(file);
-    prototypes.reserve(j.size());
+    prototypes.resize(j.size());
     for (auto node = j.begin(); node != j.end(); ++node)
     {
         auto a = j.begin().key();
         std::unique_ptr<T> newPrototype = std::make_unique<T>();
         if (newPrototype && newPrototype->Init(node))
         {
-            prototypes.emplace_back(std::move(newPrototype));
+            const auto basePrototype = dynamic_cast<BasePrototype*>(newPrototype.get());
+            if (basePrototype)
+            {
+                prototypes[basePrototype->GetID()] = std::move(newPrototype);
+            }
+            //prototypes.emplace_back(std::move(newPrototype));
         }
         
     }

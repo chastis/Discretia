@@ -32,7 +32,7 @@ public:
     {
         return dynamic_cast<const BasePrototype*>(prototype);
     }
-    [[nodiscard]] T& GetPrototype() const
+    [[nodiscard]] const T& GetPrototype() const
     {
         if (prototype)
         {

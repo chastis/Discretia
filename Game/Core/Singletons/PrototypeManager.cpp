@@ -4,6 +4,7 @@
 #include <Core/Prototypes/SpritePrototype.h>
 #include <Core/Prototypes/EntityPrototype.h>
 #include <Core/Prototypes/CollisionPrototype.h>
+#include <Core/Prototypes/RecipePrototype.h>
 
 void PrototypeManager::Init()
 {
@@ -12,4 +13,5 @@ void PrototypeManager::Init()
     SpritePrototypes::Init("SpritePrototypes");
     EntityPrototypes::Init("EntityPrototypes");
     CollisionPrototypes::Init("CollisionPrototypes");
+    RecipePrototypes::Init("RecipePrototypes");
 }

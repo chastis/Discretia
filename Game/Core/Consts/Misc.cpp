@@ -1,6 +1,6 @@
 #include <Core/Consts/Misc.h>
 
-ChannelEventType Misc::GetChannelTypeFromSFML(sf::Event::EventType SFMLType)
+ChannelEvent::Type Misc::GetChannelTypeFromSFML(sf::Event::EventType SFMLType)
 {
     switch (SFMLType)
     {
@@ -10,12 +10,12 @@ ChannelEventType Misc::GetChannelTypeFromSFML(sf::Event::EventType SFMLType)
     case sf::Event::GainedFocus:
     case sf::Event::TextEntered:
     {
-        return ChannelEventType::Application;
+        return ChannelEvent::Type::Application;
     }
     case sf::Event::KeyPressed:
     case sf::Event::KeyReleased:
     {
-        return ChannelEventType::Keyboard;
+        return ChannelEvent::Type::Keyboard;
     }
     case sf::Event::MouseWheelMoved:
     case sf::Event::MouseWheelScrolled:
@@ -25,7 +25,7 @@ ChannelEventType Misc::GetChannelTypeFromSFML(sf::Event::EventType SFMLType)
     case sf::Event::MouseEntered:
     case sf::Event::MouseLeft:
     {
-        return ChannelEventType::Mouse;
+        return ChannelEvent::Type::Mouse;
     }
     case sf::Event::JoystickButtonPressed:
     case sf::Event::JoystickButtonReleased:
@@ -39,7 +39,7 @@ ChannelEventType Misc::GetChannelTypeFromSFML(sf::Event::EventType SFMLType)
     case sf::Event::Count:
     default:
     {
-        return ChannelEventType::None;
+        return ChannelEvent::Type::None;
     }
     }
 }

@@ -17,6 +17,10 @@ void CollisionComponent::Init(Entity* inOwner)
     }
 }
 
+void CollisionComponent::Update(float deltaTime)
+{
+}
+
 void CollisionComponent::InitFromPrototype()
 {
     if (!prototype)
@@ -93,7 +97,7 @@ bool CollisionComponent::CheckBoxCollisions(const CollisionComponent* firstColli
     if (firstBox && secondBox && firstBox->ownerTransform && secondBox->ownerTransform)
     {
         const sf::FloatRect firstBoxWorldSpace = (firstBox->ownerTransform->getTransform() * firstBox->getTransform()).transformRect(firstBox->GetCollisionBox());
-        const sf::FloatRect secondBoxWorldSpace = (secondBox->ownerTransform->getTransform() * firstBox->getTransform()).transformRect(secondBox->GetCollisionBox());
+        const sf::FloatRect secondBoxWorldSpace = (secondBox->ownerTransform->getTransform() * secondBox->getTransform()).transformRect(secondBox->GetCollisionBox());
         return firstBoxWorldSpace.intersects(secondBoxWorldSpace) || secondBoxWorldSpace.intersects(firstBoxWorldSpace);
     }
     return false;
@@ -120,6 +124,21 @@ bool BoxCollisionComponent::CheckCollision(float x, float y) const
         return BoxWorldSpace.contains(x, y);
     }
     return false;
+}
+
+sf::Vector2f BoxCollisionComponent::GetPropertyCenter() const
+{
+    return { getScale().x * collisionBox.width / 2, getScale().y * collisionBox.height / 2 };
+}
+
+sf::Vector2f BoxCollisionComponent::GetPropertyCenterWorldSpace() const
+{
+    if (ownerTransform)
+    {
+        const auto BoxWorldSpace = (ownerTransform->getTransform() * getTransform()).transformPoint({ collisionBox.width / 2, collisionBox.height / 2 });
+        return BoxWorldSpace;
+    }
+    return  GetPropertyCenter();
 }
 
 const sf::FloatRect& BoxCollisionComponent::GetCollisionBox() const

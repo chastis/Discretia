@@ -8,7 +8,7 @@
 
 class EventCaller;
 
-using EventFunction = std::function<void(EventCaller*, Event&)>;
+using EventFunction = std::function<bool(EventCaller*, Event&)>;
 using EventFunctionsMap = std::map<std::string, EventFunction>;
 
 template<class T>
@@ -29,7 +29,7 @@ EventFunctionsMap EventFunctionHandler<T>::eventFunctions;
 template <class T>
 EventFunctionHandler<T>::EventFunctionHandler()
 {
-    eventFunctions.emplace("default", [](EventCaller* eventCaller, Event& inEvent) { __debugbreak(); });
+    eventFunctions.emplace("default", [](EventCaller* eventCaller, Event& inEvent) { __debugbreak(); return false; });
 }
 
 template <class T>
@@ -44,7 +44,7 @@ const EventFunction& EventFunctionHandler<T>::GetDefault()
     auto eventFunctionIt = eventFunctions.find("default");
     if (eventFunctionIt == eventFunctions.end())
     {
-        eventFunctions.emplace("default", [](EventCaller* eventCaller, Event& inEvent) { __debugbreak(); });
+        eventFunctions.emplace("default", [](EventCaller* eventCaller, Event& inEvent) { __debugbreak(); return false; });
         eventFunctionIt = eventFunctions.find("default");
     }
     return eventFunctionIt->second;
@@ -67,8 +67,13 @@ class CORE_API EventCaller
 public:
     virtual ~EventCaller() = default;
     [[nodiscard]] const EventFunction& GetEventFunction(const std::string& functionSID) const;
+    bool IsFunctionExist(const std::string& functionSID);
     virtual void InitEventFunctions() = 0;
 
+    void ChangePriorityToMax();
+    size_t priority = 0;
 protected:
     EventFunctionsMap* eventFunctions = nullptr;
+
+    static size_t maxPriority;
 };

@@ -1,0 +1,12 @@
+{
+	"tie": {
+		"id": 0,
+		"operation": 2,
+		"result": "tie",
+		"elements":
+		[
+			"vpsh",
+			"watermelon"
+		]
+	}
+}

@@ -17,6 +17,11 @@ const sf::RenderWindow& GameManager::GetWindow() const
     return application->GetWindow();
 }
 
+sf::Vector2f GameManager::GeTotalScale() const
+{
+    return application->GeTotalScale();
+}
+
 void GameManager::Init()
 {
 

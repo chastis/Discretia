@@ -4,7 +4,7 @@
 #include <Core/Entity.h>
 #include <Core/Interfaces/UIDInterface.h>
 
-EventReceiver::EventReceiver(const std::string& inSid, ChannelEventType inChannelType, EventCaller* eventCaller) : sid(inSid), channelType(inChannelType), ownerEventCaller(eventCaller)
+EventReceiver::EventReceiver(const std::string& inSid, ChannelEvent::Type inChannelType, EventCaller* eventCaller) : sid(inSid), channelType(inChannelType), ownerEventCaller(eventCaller)
 {}
 
 const std::string& EventReceiver::GetSid() const
@@ -12,9 +12,14 @@ const std::string& EventReceiver::GetSid() const
     return sid;
 }
 
-const ChannelEventType& EventReceiver::GetChannelType() const
+const ChannelEvent::Type& EventReceiver::GetChannelType() const
 {
     return channelType;
+}
+
+EventCaller* EventReceiver::GetOwner() const
+{
+    return ownerEventCaller;
 }
 
 size_t EventReceiver::GetOwnerUID() const
@@ -26,15 +31,28 @@ size_t EventReceiver::GetOwnerUID() const
     }
     else
     {
-        __debugbreak();
+        //__debugbreak();
     }
     return -1;
 }
 
-void EventReceiver::Receive(Event& inEvent)
+bool EventReceiver::Receive(Event& inEvent)
 {
     if (ownerEventCaller)
     {
-        ownerEventCaller->GetEventFunction(sid)(ownerEventCaller, inEvent);
+        return ownerEventCaller->GetEventFunction(sid)(ownerEventCaller, inEvent);
     }
+    return false;
+}
+
+bool EventReceiver::ReceiveCanceled(class Event& inEvent)
+{
+    if (ownerEventCaller)
+    {
+        if (ownerEventCaller->IsFunctionExist("!"+sid))
+        {
+            return ownerEventCaller->GetEventFunction("!"+sid)(ownerEventCaller, inEvent);
+        }
+    }
+    return false;
 }

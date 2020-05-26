@@ -10,5 +10,10 @@ class CORE_API DrawableComponent : public BaseComponent, public sf::Sprite, publ
 {
 public:
     void InitFromPrototype() override;
+    void Update(float deltaTime) override;
     size_t zIndex = 0;
+
+    static size_t GetNewMaxIndexZ();
+protected:
+    static size_t maxIndexZ;
 };

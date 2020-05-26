@@ -2,5 +2,21 @@
 	"vpsh": {
 		"id": 0,
 		"useDrawable": true
+	},
+	"watermelon": {
+		"id": 1,
+		"useDrawable": true
+	},
+	"socket": {
+		"id": 2,
+		"useDrawable": true
+	},
+	"tie": {
+		"id": 3,
+		"useDrawable": true
+	},
+	"flex": {
+		"id": 4,
+		"useDrawable": true
 	}
 }

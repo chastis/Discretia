@@ -2,15 +2,42 @@
 	"vpsh": {
 		"id": 0,
 		"texture": "vpsh",
-		"rect" : {
-			"left": 0,
-			"top": 0,
-			"height": 503,
-			"width": 512
-		},
-		"scale": {
-			"x": 0.5,
-			"y": 0.5
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"watermelon": {
+		"id": 1,
+		"texture": "watermelon",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"socket": {
+		"id": 2,
+		"texture": "socket",
+		"scale_to": {
+			"x": 200,
+			"y": 200
+		}
+	},
+	"flex": {
+		"id": 3,
+		"z_index": 2,
+		"texture": "flex",
+		"scale_to": {
+			"x": 200,
+			"y": 100
+		}
+	},
+	"tie": {
+		"id": 4,
+		"texture": "tie",
+		"scale_to": {
+			"x": 200,
+			"y": 200
 		}
 	}
 }

@@ -5,5 +5,5 @@
 
 namespace Misc
 {
-    ChannelEventType GetChannelTypeFromSFML(sf::Event::EventType SFMLType);
+    ChannelEvent::Type GetChannelTypeFromSFML(sf::Event::EventType SFMLType);
 }

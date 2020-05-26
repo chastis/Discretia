@@ -6,11 +6,75 @@
 		[ 
 			"DrawableComponent", 
 			"TransformComponent", 
-			"BoxCollisionComponent" 
+			"BoxCollisionComponent",
+			"Attacheable"
 		],
 		"events" :
 		[
-			[ 4, "move" ]
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"watermelon": 
+	{
+		"id": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"tie": 
+	{
+		"id": 2,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable" 
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"flex": 
+	{
+		"id": 3,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "button_click" ],
+			[ 4, "button_hoover" ]
+		]
+	},
+	"socket": 
+	{
+		"id": 4,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"AttachComponent"
+		],
+		"events" :
+		[
+			[ 4, "socket_hoover" ]
 		]
 	}
 }

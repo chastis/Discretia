@@ -18,7 +18,7 @@ public:
             if (node.contains("components"))
                 componentNames = node.at("components").get<std::vector<std::string>>();
             if (node.contains("events"))
-                eventParams = node.at("events").get<std::vector<std::pair<ChannelEventType, std::string>>>();
+                eventParams = node.at("events").get<std::vector<std::pair<ChannelEvent::Type, std::string>>>();
             return true;
         }
         return false;
@@ -27,13 +27,13 @@ public:
     {
         return componentNames;
     }
-    [[nodiscard]] const std::vector<std::pair<ChannelEventType, std::string>>& GetEventParams() const
+    [[nodiscard]] const std::vector<std::pair<ChannelEvent::Type, std::string>>& GetEventParams() const
     {
         return eventParams;
     }
 protected:
     std::vector<std::string> componentNames;
-    std::vector<std::pair<ChannelEventType, std::string>> eventParams;
+    std::vector<std::pair<ChannelEvent::Type, std::string>> eventParams;
 };
 
 using EntityPrototypes = BasePrototypes<EntityPrototype>;

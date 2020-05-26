@@ -8,7 +8,7 @@ class CORE_API Event
 {
 public:
     virtual ~Event() = default;
-    ChannelEventType channelType = ChannelEventType::None;
+    ChannelEvent::Type channelType = ChannelEvent::Type::None;
 };
 
 class CORE_API SFMLEvent : public Event, public sf::Event

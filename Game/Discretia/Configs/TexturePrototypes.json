@@ -2,5 +2,21 @@
 	"vpsh": {
 		"id": 0,
 		"path": "vpsh.jpg"
+	},
+	"watermelon": {
+		"id": 1,
+		"path": "watermelon.png"
+	},
+	"socket": {
+		"id": 2,
+		"path": "socket.png"
+	},
+	"flex": {
+		"id": 3,
+		"path": "flex.png"
+	},
+	"tie": {
+		"id": 4,
+		"path": "tie.jpg"
 	}
 }

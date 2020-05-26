@@ -13,6 +13,7 @@ public:
     void InitFromApplication(Application* inApplication);
     [[nodiscard]] EventDispatcher& GetEventDispatcher() const;
     [[nodiscard]] const sf::RenderWindow& GetWindow() const;
+    [[nodiscard]] sf::Vector2f GeTotalScale() const;
 
 private:
     void Init() override;

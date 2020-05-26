@@ -7,6 +7,7 @@
 #include <Core/Utility/Noncopyable.h>
 #include <map>
 #include <memory>
+#include <set>
 
 class CORE_API EventDispatcher: public Noncopyable
 {
@@ -17,9 +18,10 @@ public:
     void Dispatch(Event& inEvent);
     void JoinEvent(EventReceiver*);
     void JoinEvent(std::unique_ptr<EventReceiver>&&);
-    void LeaveChannel(ChannelEventType channelType, size_t ownerUID);
+    void RemoveEvent(EventCaller* eventCaller, const std::string& eventSID);
     void RemoveEvent(size_t ownerUID, const std::string& eventSID);
+    void LeaveChannel(ChannelEvent::Type channelType, size_t ownerUID);
 private:
-    std::map<ChannelEventType, std::vector<std::unique_ptr<EventReceiver>>> events;
+    std::map<ChannelEvent::Type, std::vector<std::unique_ptr<EventReceiver>>> events;
 };
 

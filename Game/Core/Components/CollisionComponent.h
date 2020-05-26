@@ -15,13 +15,16 @@ public:
 
     virtual ~CollisionComponent() = default;
     void Init(Entity* inOwner) override;
-     void InitFromPrototype() override;
+    void Update(float deltaTime) override;
+    void InitFromPrototype() override;
 
     bool CheckCollision(const sf::Vector2f& point) const;
     virtual bool CheckCollision(float x, float y) const = 0;
     static bool CheckCollision(const CollisionComponent* firstCollision, const CollisionComponent* secondCollision);
     bool CheckCollision(const CollisionComponent* collisionComponent) const;
 
+    [[nodiscard]] virtual sf::Vector2f GetPropertyCenter() const = 0;
+    [[nodiscard]] virtual sf::Vector2f GetPropertyCenterWorldSpace() const = 0;
     [[nodiscard]] CollisionTypes GetCollisionType() const;
 protected:
     CollisionTypes collisionType = CollisionTypes::None;
@@ -36,6 +39,8 @@ class CORE_API BoxCollisionComponent : public CollisionComponent
 public:
 
     bool CheckCollision(float x, float y) const override;
+    [[nodiscard]] sf::Vector2f GetPropertyCenter() const override;
+    [[nodiscard]] sf::Vector2f GetPropertyCenterWorldSpace() const override;
     [[nodiscard]] const sf::FloatRect& GetCollisionBox() const;
     BoxCollisionComponent();
 protected:

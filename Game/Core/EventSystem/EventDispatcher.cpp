@@ -1,14 +1,40 @@
 #include <Core/EventSystem/EventDispatcher.h>
+#include <Core/Interfaces/UIDInterface.h>
 
 void EventDispatcher::Dispatch(Event& inEvent)
 {
-    // todo gamnokod
-    for (auto& a : events)
+    std::map<ChannelEvent::Type, std::vector<EventReceiver*>> currentEvents;
+
+    for (auto& eventChannel : events)
     {
-        for (auto& b : a.second)
+        for (auto eventFunctionIt = eventChannel.second.begin(); eventFunctionIt != eventChannel.second.end(); ++eventFunctionIt)
         {
-            if (b)
-                b->Receive(inEvent);
+            if ((*eventFunctionIt)->bDirty)
+            {
+                eventFunctionIt = eventChannel.second.erase(eventFunctionIt);
+                if (eventFunctionIt==eventChannel.second.end())
+                    break;
+            }
+           
+        }
+    }
+
+    for (auto& eventChannel : events)
+    {
+        for (auto& eventFunction : eventChannel.second)
+        {
+            currentEvents[eventChannel.first].emplace_back(eventFunction.get());
+        }
+    }
+
+    for (auto& eventChannel : currentEvents)
+    {
+        for (auto& eventFunction : eventChannel.second)
+        {
+            if (eventFunction && !eventFunction->bDirty)
+            {
+                eventFunction->Receive(inEvent);
+            }
         }
     }
 }
@@ -17,7 +43,7 @@ void EventDispatcher::JoinEvent(EventReceiver* NewEvent)
 {
     if (NewEvent)
     {
-        const ChannelEventType NewEventType = NewEvent->GetChannelType();
+        const ChannelEvent::Type NewEventType = NewEvent->GetChannelType();
         events[NewEventType].emplace_back(std::unique_ptr<EventReceiver>(NewEvent));
     }
 }
@@ -26,7 +52,45 @@ void EventDispatcher::JoinEvent(std::unique_ptr<EventReceiver>&& NewEvent)
 {
     if (NewEvent)
     {
-        const ChannelEventType NewEventType = NewEvent->GetChannelType();
+        const ChannelEvent::Type NewEventType = NewEvent->GetChannelType();
         events[NewEventType].emplace_back(std::move(NewEvent));
+    }
+}
+
+void EventDispatcher::RemoveEvent(EventCaller* eventCaller, const std::string& eventSID)
+{
+    auto UIDable = dynamic_cast<UIDInterface*>(eventCaller);
+    if (UIDable)
+    {
+        RemoveEvent(UIDable->GetUID(), eventSID);
+    }
+}
+
+void EventDispatcher::RemoveEvent(size_t ownerUID, const std::string& eventSID)
+{
+    for (auto& a : events)
+    {
+        for (auto& i : a.second)
+        {
+            if (i->GetOwnerUID() == ownerUID && i->GetSid() == eventSID)
+            {
+                i->bDirty = true;
+            }
+        }
+    }
+}
+
+void EventDispatcher::LeaveChannel(ChannelEvent::Type channelType, size_t ownerUID)
+{
+    for (auto& a : events)
+    {
+        if (IsFlagOn(channelType, a.first))
+        for (auto& i : a.second)
+        {
+            if (i && !i->bDirty && i->GetOwnerUID() == ownerUID)
+            {
+                i->bDirty = true;
+            }
+        }
     }
 }
