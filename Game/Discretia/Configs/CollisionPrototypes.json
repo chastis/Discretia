@@ -126,5 +126,9 @@
 	"turtle": {
 		"id": 31,
 		"useDrawable": true
+	},
+	"lava": {
+		"id": 32,
+		"useDrawable": true
 	}
 }

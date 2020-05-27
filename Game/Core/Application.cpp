@@ -162,8 +162,11 @@ void Application::Update()
             window.draw(*drawableComponent);
         }
     }
-
-    window.draw(UIManager::GetInstance().GetUIText());
+    for (auto& text : UIManager::GetInstance().GetUITexts())
+    {
+        window.draw(text);
+    }
+    
 
     window.display();
 }

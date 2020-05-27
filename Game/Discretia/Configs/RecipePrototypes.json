@@ -128,5 +128,25 @@
 			"sand",
 			"egg"
 		]
+	},
+	"lava": {
+		"id": 13,
+		"operation": 2,
+		"result": "lava",
+		"elements":
+		[
+			"earth",
+			"fire"
+		]
+	},
+	"stone": {
+		"id": 14,
+		"operation": 2,
+		"result": "stone",
+		"elements":
+		[
+			"lava",
+			"water"
+		]
 	}
 }

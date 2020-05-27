@@ -806,7 +806,7 @@
 	"ui_turtle": 
 	{
 		"id": 51,
-		"type": 1,
+		"type": 2,
 		"components" : 
 		[ 
 			"DrawableComponent", 
@@ -826,6 +826,38 @@
 		[ 
 			"DrawableComponent", 
 			"TransformComponent"
+		]
+	},
+	"lava": 
+	{
+		"id": 53,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_lava": 
+	{
+		"id": 54,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
 		]
 	}
 }

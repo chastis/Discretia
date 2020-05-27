@@ -138,6 +138,10 @@
 	"socket2": {
 		"id": 34,
 		"path": "socket2.png"
+	},
+	"lava": {
+		"id": 35,
+		"path": "lava.png"
 	}
 }
 

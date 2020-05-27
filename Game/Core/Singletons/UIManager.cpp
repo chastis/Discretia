@@ -160,12 +160,54 @@ void UIManager::NextOperation()
     ChangeSockets();
 }
 
-const sf::Text& UIManager::GetUIText()
+void UIManager::AddTemporaryText(std::string message, sf::Vector2f loc)
+{
+    for (auto& existingText : temporaryTexts)
+    {
+        if (existingText.getString() == message)
+        {
+            existingText.setPosition(loc);
+            return;
+        }
+    }
+    sf::Text newText;
+    newText.setFont(*AssetManager::GetInstance().GetFont());
+    newText.setCharacterSize(25);
+
+    newText.setPosition(loc);
+    newText.setFillColor(sf::Color::White);
+    newText.setOutlineColor(sf::Color::Black);
+    newText.setOutlineThickness(3.f);
+    newText.setString(message);
+    newText.setStyle(sf::Text::Bold);
+
+    temporaryTexts.push_back(newText);
+}
+
+void UIManager::RemoveTemporaryText(std::string message)
+{
+    for (auto text = temporaryTexts.begin(); text != temporaryTexts.end(); ++text)
+    {
+        if (text->getString() == message)
+        {
+            text = temporaryTexts.erase(text);
+            return;
+        }
+    }
+}
+
+std::vector<sf::Text> UIManager::GetUITexts()
 {
     text.setPosition(300 * GameManager::GetInstance().GetTotalScale().x + GameManager::GetInstance().GetTotalShift().x, 20 * GameManager::GetInstance().GetTotalScale().y);
-    text.setCharacterSize(static_cast<unsigned int>(std::floor(25 * GameManager::GetInstance().GetTotalScale().x)));
-    return text;
+    std::vector temp = temporaryTexts;
+    temp.push_back(text);
+    for (auto& a : temp)
+    {
+        a.setCharacterSize(static_cast<unsigned int>(std::floor(25 * GameManager::GetInstance().GetTotalScale().x)));
+    }
+    return temp;
 }
+
 
 void UIManager::SetTextLastCreation(std::string inText)
 {
