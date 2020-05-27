@@ -82,5 +82,9 @@
 	"wind": {
 		"id": 20,
 		"path": "wind.png"
+	},
+	"dust": {
+		"id": 21,
+		"path": "dust.png"
 	}
 }

@@ -10,7 +10,7 @@ void EntityManager::Init()
     sortedEntities.clear();
 }
 
-const std::map<size_t, std::unique_ptr<Entity>>& EntityManager::GetEntities() const
+const std::map<size_t, std::shared_ptr<Entity>>& EntityManager::GetEntities() const
 {
     return entities;
 }
@@ -66,7 +66,7 @@ Entity* EntityManager::GetActiveEntity(bool resort)
 
 Entity* EntityManager::CreateEntity()
 {
-    std::unique_ptr<Entity> newEntity = std::make_unique<Entity>();
+    std::shared_ptr<Entity> newEntity = std::make_shared<Entity>();/*std::make_unique<Entity>();*/
     newEntity->Init();
     Entity* newEntityPtr = newEntity.get();
     sortedEntities.push_back(newEntityPtr);

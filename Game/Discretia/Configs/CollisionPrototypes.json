@@ -82,5 +82,9 @@
 	"wind": {
 		"id": 20,
 		"useDrawable": true
+	},
+	"dust": {
+		"id": 21,
+		"useDrawable": true
 	}
 }

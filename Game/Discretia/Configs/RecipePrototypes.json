@@ -28,5 +28,15 @@
 			"air",
 			"fire"
 		]
+	},
+	"dust": {
+		"id": 3,
+		"operation": 2,
+		"result": "dust",
+		"elements":
+		[
+			"air",
+			"earth"
+		]
 	}
 }

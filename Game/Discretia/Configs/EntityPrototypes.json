@@ -466,5 +466,37 @@
 			[ 4, "create" ],
 			[ 4, "ui_item_hoover"]
 		]
+	},
+	"dust": 
+	{
+		"id": 30,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_dust": 
+	{
+		"id": 31,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
 	}
 }
