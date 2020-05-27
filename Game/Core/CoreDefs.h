@@ -15,3 +15,5 @@
     #define CORE_API
     #define TEMPLATE_EXPORT_DLL
 #endif //M42_WINDOWS && M42_CORE
+
+#pragma warning(disable: 4275)

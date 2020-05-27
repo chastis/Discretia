@@ -38,5 +38,95 @@
 			"air",
 			"earth"
 		]
+	},
+	"metal": {
+		"id": 4,
+		"operation": 2,
+		"result": "metal",
+		"elements":
+		[
+			"stone",
+			"fire"
+		]
+	},
+	"ashes": {
+		"id": 5,
+		"operation": 2,
+		"result": "ashes",
+		"elements":
+		[
+			"dust",
+			"fire"
+		]
+	},
+	"sound": {
+		"id": 6,
+		"operation": 2,
+		"result": "sound",
+		"elements":
+		[
+			"metal",
+			"wind"
+		]
+	},
+	"sand": {
+		"id": 7,
+		"operation": 2,
+		"result": "sand",
+		"elements":
+		[
+			"stone",
+			"air"
+		]
+	},
+	"glass": {
+		"id": 8,
+		"operation": 2,
+		"result": "glass",
+		"elements":
+		[
+			"sand",
+			"fire"
+		]
+	},
+	"swamp": {
+		"id": 9,
+		"operation": 2,
+		"result": "swamp",
+		"elements":
+		[
+			"water",
+			"earth"
+		]
+	},
+	"life": {
+		"id": 10,
+		"operation": 2,
+		"result": "life",
+		"elements":
+		[
+			"swamp",
+			"energy"
+		]
+	},
+	"egg": {
+		"id": 11,
+		"operation": 2,
+		"result": "egg",
+		"elements":
+		[
+			"stone",
+			"life"
+		]
+	},
+	"turtle": {
+		"id": 12,
+		"operation": 2,
+		"result": "turtle",
+		"elements":
+		[
+			"sand",
+			"egg"
+		]
 	}
 }

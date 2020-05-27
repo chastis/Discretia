@@ -86,5 +86,45 @@
 	"dust": {
 		"id": 21,
 		"useDrawable": true
+	},
+	"metal": {
+		"id": 22,
+		"useDrawable": true
+	},
+	"stone": {
+		"id": 23,
+		"useDrawable": true
+	},
+	"ashes": {
+		"id": 24,
+		"useDrawable": true
+	},
+	"sound": {
+		"id": 25,
+		"useDrawable": true
+	},
+	"sand": {
+		"id": 26,
+		"useDrawable": true
+	},
+	"glass": {
+		"id": 27,
+		"useDrawable": true
+	},
+	"swamp": {
+		"id": 28,
+		"useDrawable": true
+	},
+	"life": {
+		"id": 29,
+		"useDrawable": true
+	},
+	"egg": {
+		"id": 30,
+		"useDrawable": true
+	},
+	"turtle": {
+		"id": 31,
+		"useDrawable": true
 	}
 }

@@ -185,5 +185,101 @@
 			"x": 100,
 			"y": 100
 		}
+	},
+	"metal": {
+		"id": 22,
+		"texture": "metal",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"stone": {
+		"id": 23,
+		"texture": "stone",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"ashes": {
+		"id": 24,
+		"texture": "ashes",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"sound": {
+		"id": 25,
+		"texture": "sound",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"sand": {
+		"id": 26,
+		"texture": "sand",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"glass": {
+		"id": 27,
+		"texture": "glass",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"swamp": {
+		"id": 28,
+		"texture": "swamp",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"life": {
+		"id": 29,
+		"texture": "life",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"egg": {
+		"id": 30,
+		"texture": "egg",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"turtle": {
+		"id": 31,
+		"texture": "turtle",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"list": {
+		"id": 32,
+		"texture": "list",
+		"scale_to": {
+			"x": 140,
+			"y": 480
+		}
+	},
+	"socket2": {
+		"id": 33,
+		"texture": "socket2",
+		"scale_to": {
+			"x": 120,
+			"y": 120
+		}
 	}
 }

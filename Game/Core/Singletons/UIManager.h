@@ -21,11 +21,12 @@ public:
     void UpItemList();
     void DownItemList();
     void NextOperation();
-    sf::Text GetUIText();
+    const sf::Text& GetUIText();
     void SetTextLastCreation(std::string text);
-
+    sf::Sprite GetBackground() const;
 private:
     sf::Text text;
+    sf::Sprite bg;
     std::vector<Entity*> itemTypes;
     std::vector<Entity*> items;
     Entity* discreteButton = nullptr;

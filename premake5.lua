@@ -6,7 +6,7 @@ workspace "Discretia"
    startproject "Discretia"
    platforms { "Win64" }
 
-   flags { "MultiProcessorCompile" }
+   flags { "MultiProcessorCompile", "FatalWarnings" }
 
    CPPDIALECT = "C++17"
    
