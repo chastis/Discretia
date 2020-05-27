@@ -10,5 +10,15 @@ class CORE_API DrawableComponent : public BaseComponent, public sf::Sprite, publ
 {
 public:
     void InitFromPrototype() override;
+    void Update(float deltaTime) override;
+    void ChangeInterpRandomColor(float interp);
     size_t zIndex = 0;
+
+    static size_t GetNewMaxIndexZ();
+protected:
+
+    float interpSpeed = 0.f;
+    sf::Color desiredColor = sf::Color::White;
+
+    static size_t maxIndexZ;
 };

@@ -2,6 +2,7 @@
 #include <Core/Components/CollisionComponent.h>
 #include <Core/Components/DrawableComponent.h>
 #include <Core/Components/TransformComponent.h>
+#include <Core/Components/AttachComponent.h>
 
 void ComponentFactory::Init()
 {
@@ -9,6 +10,8 @@ void ComponentFactory::Init()
     creatorComponents[typeid(BoxCollisionComponent)] = []() { return new BoxCollisionComponent(); };
     creatorComponents[typeid(DrawableComponent)] = []() { return new DrawableComponent(); };
     creatorComponents[typeid(TransformComponent)] = []() { return new TransformComponent(); };
+    creatorComponents[typeid(AttachComponent)] = []() { return new AttachComponent(); };
+    creatorComponents[typeid(Attacheable)] = []() { return new Attacheable(); };
 }
 
 BaseComponent* ComponentFactory::CreateComponent(TypeInfoRef type)

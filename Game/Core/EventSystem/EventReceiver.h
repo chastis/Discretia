@@ -7,22 +7,28 @@
 #include <Core/Consts/Enums.h>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <memory>
 
 class EventCaller;
 
 class CORE_API EventReceiver
 {
+    friend class EventDispatcher;
 public:
-    EventReceiver(const std::string& inSid, ChannelEventType inChannelType, EventCaller* eventCaller);
+    
+    EventReceiver(const std::string& inSid, ChannelEvent::Type inChannelType, EventCaller* eventCaller);
 
     virtual ~EventReceiver() = default;
     [[nodiscard]] const std::string& GetSid() const;
-    [[nodiscard]] const ChannelEventType& GetChannelType() const;
+    [[nodiscard]] const ChannelEvent::Type& GetChannelType() const;
+    [[nodiscard]] EventCaller* GetOwner() const;
     [[nodiscard]] size_t GetOwnerUID() const;
-    virtual void Receive(Event& inEvent);
-
+    virtual bool Receive(Event& inEvent);
+    virtual bool ReceiveCanceled(Event& inEvent);
 private:
     std::string sid;
-    ChannelEventType channelType = ChannelEventType::None;
+    ChannelEvent::Type channelType = ChannelEvent::Type::None;
     EventCaller* ownerEventCaller = nullptr;
+
+    bool bDirty = false;
 };

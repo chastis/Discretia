@@ -20,7 +20,11 @@ public:
 
     [[nodiscard]] EventDispatcher& GetEventDispatcher();
     [[nodiscard]] const sf::RenderWindow& GetWindow() const;
+    [[nodiscard]] sf::Vector2f GetTotalScale() const;
+    [[nodiscard]] sf::Vector2f GetTotalShift() const;
 private:
     EventDispatcher eventDispatcher;
     sf::RenderWindow window;
+    sf::FloatRect prevView;
+    sf::Vector2f totalShift;
 };

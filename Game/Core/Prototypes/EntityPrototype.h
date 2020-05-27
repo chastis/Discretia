@@ -5,6 +5,7 @@
 #include <Core/Utility/Json.h>
 #include <vector>
 #include <string>
+#include <optional>
 
 class EntityPrototype : public BasePrototype
 {
@@ -18,7 +19,9 @@ public:
             if (node.contains("components"))
                 componentNames = node.at("components").get<std::vector<std::string>>();
             if (node.contains("events"))
-                eventParams = node.at("events").get<std::vector<std::pair<ChannelEventType, std::string>>>();
+                eventParams = node.at("events").get<std::vector<std::pair<ChannelEvent::Type, std::string>>>();
+            if (node.contains("type"))
+                itemType = node.at("type").get<EntityTypes>();
             return true;
         }
         return false;
@@ -27,13 +30,18 @@ public:
     {
         return componentNames;
     }
-    [[nodiscard]] const std::vector<std::pair<ChannelEventType, std::string>>& GetEventParams() const
+    [[nodiscard]] const std::vector<std::pair<ChannelEvent::Type, std::string>>& GetEventParams() const
     {
         return eventParams;
     }
+    [[nodiscard]] EntityTypes GetItemType() const
+    {
+        return itemType;
+    }
 protected:
+    EntityTypes itemType = EntityTypes::Core;
     std::vector<std::string> componentNames;
-    std::vector<std::pair<ChannelEventType, std::string>> eventParams;
+    std::vector<std::pair<ChannelEvent::Type, std::string>> eventParams;
 };
 
 using EntityPrototypes = BasePrototypes<EntityPrototype>;

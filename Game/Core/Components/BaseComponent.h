@@ -8,6 +8,7 @@ class CORE_API BaseComponent
 {
 public:
     virtual void Init(Entity* inOwner);
+    virtual void Update(float deltaTime);
     virtual  ~BaseComponent() = default;
 protected:
     Entity* owner = nullptr;

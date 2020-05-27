@@ -12,6 +12,8 @@ void AssetManager::Init()
             textures[texturePrototype.GetSID()] = std::move(newTexture);
         }
     }
+    const auto path = CoreConst::EngineContentPath + std::string("HeyComic.ttf");
+    font.loadFromFile(path);
 }
 
 sf::Texture* AssetManager::GetTexture(const std::string& sid) const
@@ -22,4 +24,9 @@ sf::Texture* AssetManager::GetTexture(const std::string& sid) const
         return it->second.get();
     }
     return nullptr;
+}
+
+const sf::Font* AssetManager::GetFont() const
+{
+    return &font;
 }

@@ -7,6 +7,9 @@
 #include <Core/Singletons/AssetManager.h>
 #include <Core/Singletons/EntityManager.h>
 #include <Core/Singletons/GameManager.h>
+#include <Core/Singletons/TimeManager.h>
+#include <Core/Singletons/UIManager.h>
+#include <Core/Singletons/RecipeManager.h>
 #include <Core/Components/DrawableComponent.h>
 #include <Core/Components/CollisionComponent.h>
 #include <Core/Components/TransformComponent.h>
@@ -21,15 +24,19 @@ void Application::InitFromPrototype()
     AssetManager::CreateInstance();
     EntityManager::CreateInstance();
     GameManager::CreateInstance();
+    TimeManager::CreateInstance();
+    UIManager::CreateInstance();
+    RecipeManager::CreateInstance();
 
     UIDManager::GetInstance().Init();
     PrototypeManager::GetInstance().Init();
     AssetManager::GetInstance().Init();
     EntityManager::GetInstance().Init();
     GameManager::GetInstance().InitFromApplication(this);
+    TimeManager::GetInstance().Init();
+    RecipeManager::GetInstance().Init();
 
     // Factories
-
     ComponentFactory::CreateInstance();
     ComponentFactory::GetInstance().Init();
 
@@ -38,6 +45,7 @@ void Application::InitFromPrototype()
         prototype = &ApplicationPrototypes::GetDefault();
     }
     window.create(sf::VideoMode(static_cast<unsigned int>(prototype->getWidth()), static_cast<unsigned int>(prototype->getHeight())), prototype->getTitle());
+    prevView = { 0, 0, static_cast<float>(prototype->getWidth()), static_cast<float>(prototype->getHeight()) };
 
     InitEventFunctions();
 }
@@ -48,29 +56,42 @@ void Application::InitEventFunctions()
     if (eventFunctions->empty()) // not implemented
     {
         eventFunctions->emplace("closing", [](EventCaller* eventCaller, Event& inEvent)
-        {
-            auto application = dynamic_cast<Application*>(eventCaller);
-            const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
-            if (application && sfEvent && sfEvent->type == sf::Event::EventType::Closed)
             {
-                application->window.close();
-            }
-        });
+                auto application = dynamic_cast<Application*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (application && sfEvent && sfEvent->type == sf::Event::EventType::Closed)
+                {
+                    application->window.close();
+                }
+                return false;
+            });
         eventFunctions->emplace("resize", [](EventCaller* eventCaller, Event& inEvent)
-        {
-            auto application = dynamic_cast<Application*>(eventCaller);
-            const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
-            if (application && sfEvent && sfEvent->type == sf::Event::EventType::Resized)
             {
-                const sf::FloatRect newViewport{
-                0.f, 0.f,
-                static_cast<float>(sfEvent->size.width),
-                static_cast<float>(sfEvent->size.height)
-                };
-
-                application->window.setView(sf::View(newViewport));
-            }
-        });
+                auto application = dynamic_cast<Application*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (application && sfEvent && sfEvent->type == sf::Event::EventType::Resized)
+                {
+                    sf::FloatRect newViewport{
+                    0.f, 0.f,
+                    static_cast<float>(sfEvent->size.width),
+                    static_cast<float>(sfEvent->size.height)
+                    };
+                    const float preMinLen = static_cast<float>(std::min(application->prevView.width, application->prevView.height));
+                    const float newScale = static_cast<float>(std::min(newViewport.width / preMinLen, newViewport.height / preMinLen));
+                    //const float correctScale = newViewport.height/application->GetPrototype().getHeight();
+                    const float viewportShift = (newViewport.width - newScale * application->prevView.width) / 2;
+                    //newViewport.left = -viewportShift;
+                    application->prevView = newViewport;
+                    application->window.setView(sf::View(newViewport));
+                    application->totalShift = { (newViewport.width - application->GetPrototype().getWidth() * application->GetTotalScale().x) / 2, 0.f };
+                    for (auto entity : EntityManager::GetInstance().GetSortedEntities())
+                    {
+                        entity->Scale({ newScale, newScale });
+                        entity->Shift({ viewportShift, 0.f });
+                    }
+                }
+                return false;
+            });
     }
 }
 
@@ -81,36 +102,22 @@ bool Application::IsRunning() const
 
 void Application::Run()
 {
-    Entity* VPSHENEMY = EntityManager::GetInstance().CreateEntity();
-    VPSHENEMY->InitPrototype("vpsh");
-    VPSHENEMY->InitFromPrototype();
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-    /*auto drawableComponent = VPSHENEMY->AddComponent<DrawableComponent>();
-    drawableComponent->InitPrototype("vpsh");
-    drawableComponent->InitFromPrototype();
+    UIManager::GetInstance().Init();
 
-    auto transformComponent = VPSHENEMY->AddComponent<TransformComponent>();
-    transformComponent->setPosition(100, 100);
-    transformComponent->scale(0.5, 0.5);
-
-    auto collisionComponent = VPSHENEMY->AddComponent<BoxCollisionComponent>();
-    collisionComponent->InitFromDrawable();*/
-
-    
-
-    /*EventReceiver* MouseMove = new EventReceiver("move", ChannelEventType::Application, VPSHENEMY);
-    eventDispatcher.JoinEvent(MouseMove);*/
-
-    EventReceiver* CloseApp = new EventReceiver("closing", ChannelEventType::Application, this);
+    EventReceiver* CloseApp = new EventReceiver("closing", ChannelEvent::Type::Application, this);
     eventDispatcher.JoinEvent(CloseApp);
 
-    EventReceiver* ResizeApp = new EventReceiver("resize", ChannelEventType::Application, this);
+    EventReceiver* ResizeApp = new EventReceiver("resize", ChannelEvent::Type::Application, this);
     eventDispatcher.JoinEvent(ResizeApp);
 
 }
 
 void Application::Update()
 {
+    TimeManager::GetInstance().Update();
+
     {
         sf::Event sfEvent;
         while (window.pollEvent(sfEvent))
@@ -120,23 +127,35 @@ void Application::Update()
         }
     }
 
-    window.clear();
-    for (const auto& entity : EntityManager::GetInstance().GetEntities())
+    eventDispatcher.DispatchFutureEvents();
+
+    EntityManager::GetInstance().UpdateEntities(TimeManager::GetInstance().GetDeltaTime().asSeconds());
+
+    //window.clear();
+
+    window.clear(sf::Color(50,50,50));
+
+    EntityManager::GetInstance().ActivateEntity();
+
+
+    for (const auto& render : EntityManager::GetInstance().GetSortedEntities(false))
     {
-        auto drawableComponent = entity.second->GetComponent<DrawableComponent>();
-        if (drawableComponent)
+        auto drawableComponent = render->GetComponent<DrawableComponent>();
+        auto transformComponent = render->GetComponent<TransformComponent>();
+        if (transformComponent)
         {
-            auto transformComponent = entity.second->GetComponent<TransformComponent>();
-            if (transformComponent)
-            {
-                window.draw(*drawableComponent, transformComponent->getTransform());
-            }
-            else
-            {
-                window.draw(*drawableComponent);
-            }
+            sf::Transform renderTransform = transformComponent->getTransform();
+            //renderTransform.scale(scale);
+            window.draw(*drawableComponent, renderTransform);
+        }
+        else
+        {
+            window.draw(*drawableComponent);
         }
     }
+
+    window.draw(UIManager::GetInstance().GetUIText());
+
     window.display();
 }
 
@@ -148,4 +167,16 @@ EventDispatcher& Application::GetEventDispatcher()
 const sf::RenderWindow& Application::GetWindow() const
 {
     return window;
+}
+
+sf::Vector2f Application::GetTotalScale() const
+{
+    const float preMinLen = static_cast<float>(std::min(GetPrototype().getWidth(), GetPrototype().getHeight()));
+    const float newScale = static_cast<float>(std::min(window.getSize().x / preMinLen, window.getSize().y / preMinLen));
+    return { newScale, newScale };
+}
+
+sf::Vector2f Application::GetTotalShift() const
+{
+    return totalShift;
 }

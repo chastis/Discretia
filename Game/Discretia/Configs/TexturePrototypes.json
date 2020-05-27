@@ -2,5 +2,85 @@
 	"vpsh": {
 		"id": 0,
 		"path": "vpsh.jpg"
+	},
+	"watermelon": {
+		"id": 1,
+		"path": "watermelon.png"
+	},
+	"socket": {
+		"id": 2,
+		"path": "socket.png"
+	},
+	"tie": {
+		"id": 3,
+		"path": "tie.jpg"
+	},
+	"flex": {
+		"id": 4,
+		"path": "discretia.png"
+	},
+	"button_up": {
+		"id": 5,
+		"path": "button_up.png"
+	},
+	"button_down": {
+		"id": 6,
+		"path": "button_down.png"
+	},
+	"group_a": {
+		"id": 7,
+		"path": "group_a.png"
+	},
+	"group_b": {
+		"id": 8,
+		"path": "group_b.png"
+	},
+	"bin": {
+		"id": 9,
+		"path": "bin.png"
+	},
+	"union": {
+		"id": 10,
+		"path": "union.png"
+	},
+	"symmetric_difference": {
+		"id": 11,
+		"path": "symmetric_difference.png"
+	},
+	"intersection": {
+		"id": 12,
+		"path": "intersection.png"
+	},
+	"complement": {
+		"id": 13,
+		"path": "complement.png"
+	},
+	"absolute_complement": {
+		"id": 14,
+		"path": "absolute_complement.png"
+	},
+	"air": {
+		"id": 15,
+		"path": "air.png"
+	},
+	"earth": {
+		"id": 16,
+		"path": "earth.png"
+	},
+	"energy": {
+		"id": 17,
+		"path": "energy.png"
+	},
+	"fire": {
+		"id": 18,
+		"path": "fire.png"
+	},
+	"water": {
+		"id": 19,
+		"path": "water.png"
+	},
+	"wind": {
+		"id": 20,
+		"path": "wind.png"
 	}
 }

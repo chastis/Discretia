@@ -65,6 +65,10 @@ public:
     }
 
     void Init();
+    void Update(float deltaTime);
+    void Scale(sf::Vector2f scale);
+    void Shift(sf::Vector2f shift);
+    bool bActive = false;
 private:
     std::vector<std::unique_ptr<BaseComponent>> components;
 

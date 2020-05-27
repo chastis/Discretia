@@ -4,7 +4,7 @@
 #include <Core/Utility/SFMLAdapter.h>
 #include <Core/Utility/Json.h>
 #include <SFML/Graphics.hpp>
-
+#include <optional>
 
 class SpritePrototype : public BasePrototype
 {
@@ -15,15 +15,30 @@ public:
         {
             const nlohmann::json& node = nodeIt.value();
             if (!node.contains("texture")
-                ||!node.contains("rect")
-                ||!node.contains("scale"))
+                ||(!node.contains("scale") && !node.contains("scale_to")))
             {
                 __debugbreak();
                 return false;
             }
             textureSID = node.at("texture").get<std::string>();
-            rect = node.at("rect").get<sf::IntRect>();
-            scale = node.at("scale").get<sf::Vector2f>();
+            if (node.contains("rect"))
+            {
+                rect = node.at("rect").get<sf::IntRect>();
+            }
+            if (node.contains("z_index"))
+            {
+                zIndex = node.at("z_index").get<size_t>();
+            }
+            if (node.contains("scale"))
+            {
+                scale = node.at("scale").get<sf::Vector2f>();
+            }
+            else
+            {
+                useScaleTo = true;
+                scale = node.at("scale_to").get<sf::Vector2f>();
+            }
+            
             return true;
         }
         return false;
@@ -32,7 +47,7 @@ public:
     {
         return textureSID;
     }
-    [[nodiscard]] const sf::IntRect& getRect() const
+    [[nodiscard]] const std::optional<sf::IntRect>& getRect() const
     {
         return rect;
     }
@@ -40,10 +55,22 @@ public:
     {
         return scale;
     }
+    [[nodiscard]] size_t GetZIndex() const
+    {
+        return zIndex;
+    }
+    [[nodiscard]] bool UseScaleTo() const
+    {
+        return useScaleTo;
+    }
 protected:
     std::string textureSID;
-    sf::IntRect rect;
+     
     sf::Vector2f scale;
+    std::optional<sf::IntRect> rect;
+
+    size_t zIndex = 1;
+    bool useScaleTo = false;
 
 };
 
