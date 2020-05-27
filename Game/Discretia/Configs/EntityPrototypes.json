@@ -76,5 +76,395 @@
 		[
 			[ 4, "socket_hoover" ]
 		]
+	},
+	"button_up": 
+	{
+		"id": 5,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "button_up" ]
+		]
+	},
+	"button_down": 
+	{
+		"id": 6,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "button_down" ]
+		]
+	},
+	"group_a": 
+	{
+		"id": 7,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "group_a" ],
+			[ 4, "button_hoover" ]
+		]
+	},
+	"group_b": 
+	{
+		"id": 8,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "group_b" ],
+			[ 4, "button_hoover" ]
+		]
+	},
+	"ui_vpsh": 
+	{
+		"id": 9,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"ui_watermelon": 
+	{
+		"id": 10,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"ui_tie": 
+	{
+		"id": 11,
+		"type": 2,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"bin": 
+	{
+		"id": 12,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "bin" ]
+		]
+	},
+	"union": 
+	{
+		"id": 13,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "operation_button" ],
+			[ 4, "operation_button_hoover" ]
+		]
+	},
+	"symmetric_difference": 
+	{
+		"id": 14,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "operation_button" ],
+			[ 4, "operation_button_hoover" ]
+		]
+	},
+	"intersection": 
+	{
+		"id": 15,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "operation_button" ],
+			[ 4, "operation_button_hoover" ]
+		]
+	},
+	"complement": 
+	{
+		"id": 16,
+		"type": 2,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "operation_button" ],
+			[ 4, "operation_button_hoover" ]
+		]
+	},
+	"absolute_complement": 
+	{
+		"id": 17,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "operation_button" ],
+			[ 4, "operation_button_hoover" ]
+		]
+	},
+	"air": 
+	{
+		"id": 18,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_air": 
+	{
+		"id": 19,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"earth": 
+	{
+		"id": 20,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_earth": 
+	{
+		"id": 21,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"energy": 
+	{
+		"id": 22,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_energy": 
+	{
+		"id": 23,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"fire": 
+	{
+		"id": 24,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_fire": 
+	{
+		"id": 25,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"water": 
+	{
+		"id": 26,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_water": 
+	{
+		"id": 27,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"wind": 
+	{
+		"id": 28,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_wind": 
+	{
+		"id": 29,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
 	}
 }

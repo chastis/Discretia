@@ -13,8 +13,8 @@ public:
     void InitFromApplication(Application* inApplication);
     [[nodiscard]] EventDispatcher& GetEventDispatcher() const;
     [[nodiscard]] const sf::RenderWindow& GetWindow() const;
-    [[nodiscard]] sf::Vector2f GeTotalScale() const;
-
+    [[nodiscard]] sf::Vector2f GetTotalScale() const;
+    [[nodiscard]] sf::Vector2f GetTotalShift() const;
 private:
     void Init() override;
     Application* application = nullptr;

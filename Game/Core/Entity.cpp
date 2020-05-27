@@ -3,6 +3,7 @@
 #include <Core/Singletons/UIDManager.h>
 #include <Core/Singletons/EntityManager.h>
 #include <Core/Singletons/RecipeManager.h>
+#include <Core/Singletons/UIManager.h>
 #include <Core/Components/TransformComponent.h>
 #include <Core/Components/DrawableComponent.h>
 #include <Core/Components/CollisionComponent.h>
@@ -27,10 +28,18 @@ void Entity::InitFromPrototype()
         auto prototypeableComponent = dynamic_cast<BasePrototypeableInterface*>(component.get());
         if (prototypeableComponent)
         {
-            prototypeableComponent->InitPrototype(prototype->GetSID());
+            // costil
+            std::string sid = prototype->GetSID();
+            if (sid.find("ui_") != std::string::npos)
+            {
+                sid.erase(sid.begin(), sid.begin() + 3);
+            }
+            prototypeableComponent->InitPrototype(sid);
             prototypeableComponent->InitFromPrototype();
         }
     }
+
+    GameManager::GetInstance().GetEventDispatcher().LeaveChannel(ChannelEvent::All, uid);
 
     for (const auto& eventParam : prototype->GetEventParams())
     {
@@ -40,7 +49,7 @@ void Entity::InitFromPrototype()
 
     InitEventFunctions();
 
-    Scale(GameManager::GetInstance().GeTotalScale());
+    Scale(GameManager::GetInstance().GetTotalScale());
 }
 
 void Entity::InitEventFunctions()
@@ -173,6 +182,54 @@ void Entity::InitEventFunctions()
                 return false;
             });
 
+        eventFunctions->emplace("operation_button_hoover", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseMoved)
+                {
+                    auto drawableComponent = entity->GetComponent<DrawableComponent>();
+                    if (drawableComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            if (drawableComponent->getColor() == sf::Color::White)
+                            {
+                                drawableComponent->setColor(sf::Color::Green);
+                            }
+                        }
+                        else
+                        {
+                            drawableComponent->setColor(sf::Color::White);
+                        }
+                    }
+                }
+                return false;
+            });
+
+        eventFunctions->emplace("my_work_done_here", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto createEvent = dynamic_cast<CreateEntityEvent*>(&inEvent);
+                if (entity && createEvent)
+                {
+                    bool ReadyForCreate = true;
+                    for (auto en : createEvent->GetDeletedEntities())
+                    {
+                        if (en->GetComponent<TransformComponent>()->moving)
+                        {
+                            ReadyForCreate = false;
+                        }
+                    }
+                    if (ReadyForCreate)
+                    {
+                        UIManager::GetInstance().SetTextLastCreation(createEvent->GetResult());
+                        createEvent->CreateEntity();
+                        return true;
+                    }
+                }
+                return false;
+            });
         eventFunctions->emplace("button_hoover", [](EventCaller* eventCaller, Event& inEvent)
             {
                 auto entity = dynamic_cast<Entity*>(eventCaller);
@@ -228,23 +285,231 @@ void Entity::InitEventFunctions()
                                     attachedSIDs.push_back(attach->GetPrototype().GetSID());
                                 }
 
-                                const RecipePrototype* newEntityPrototype = RecipeManager::GetInstance().CheckExistRecipe(attachedSIDs, DiscreteOperations::Union);
+                                const RecipePrototype* newEntityPrototype = RecipeManager::GetInstance().CheckExistRecipe(attachedSIDs, RecipeManager::GetInstance().currentDiscreteOperation);
 
-                                if (newEntityPrototype)
+                                const auto collisionComponent = entity->GetComponent<CollisionComponent>();
+                                if (newEntityPrototype && collisionComponent)
                                 {
-                                    Entity* newEntity = EntityManager::GetInstance().CreateEntity();
-                                    newEntity->InitPrototype(newEntityPrototype->GetSID());
+                                    const auto newEntityPos = transformComponent->getPosition() + collisionComponent->GetPropertyCenter() + sf::Vector2f(0, -320 * GameManager::GetInstance().GetTotalScale().x);
+
+                                    auto createEvent = new CreateEntityEvent(newEntityPrototype, newEntityPos);
+                                    for (const auto& attach : attached)
+                                    {
+                                        attach->GetComponent<DrawableComponent>()->ChangeInterpRandomColor(100.f);
+                                        createEvent->AddEntityForDelete(attach);
+                                    }
+
+                                    GameManager::GetInstance().GetEventDispatcher().AddFutureEvent(createEvent);
+
+                                    for (const auto& attach : attached)
+                                    {
+                                        const auto activeEntityCollisionComponent = attach->GetComponent<CollisionComponent>();
+                                        const auto activeEntityTransformComponent = attach->GetComponent<TransformComponent>();
+                                        if (activeEntityTransformComponent && activeEntityCollisionComponent)
+                                        {
+                                            const auto propertyDesiredLocation = newEntityPos - activeEntityCollisionComponent->GetPropertyCenter();
+                                            activeEntityTransformComponent->MoveTo(propertyDesiredLocation);
+                                        }
+                                    }
+
+                                    const auto newEvent = new EventReceiver("my_work_done_here", ChannelEvent::Type::Custom, eventCaller);
+                                    GameManager::GetInstance().GetEventDispatcher().JoinEvent(newEvent);
+
+                                    /*Entity* newEntity = EntityManager::GetInstance().CreateEntity();
+                                    newEntity->InitPrototype(newEntityPrototype->getResult());
                                     newEntity->InitFromPrototype();
-                                    const auto newEntityPos = transformComponent->getPosition() + sf::Vector2f(0,-300 * GameManager::GetInstance().GeTotalScale().x);
+
+                                    if (!RecipeManager::GetInstance().IsKnownItem("ui_"+newEntityPrototype->getResult()))
+                                    {
+                                        RecipeManager::GetInstance().AddKnownItem("ui_"+newEntityPrototype->getResult());
+                                        UIManager::GetInstance().ChangeVisibleItemTypes(EntityPrototypes::Get("ui_"+newEntityPrototype->getResult()).GetItemType());
+                                    }
+
+                                    const auto newEntityPos = transformComponent->getPosition() + sf::Vector2f(0, -300 * GameManager::GetInstance().GetTotalScale().x);
                                     newEntity->GetComponent<TransformComponent>()->setPosition(newEntityPos);
 
                                     for (const auto& attach : attached)
                                     {
                                         GameManager::GetInstance().GetEventDispatcher().LeaveChannel(ChannelEvent::Type::All, attach->GetUID());
                                         EntityManager::GetInstance().RemoveEntityByUID(attach->GetUID());
-                                    }
+                                    }*/
                                 }
                             }
+                        }
+                    }
+                }
+                return false;
+            });
+
+        eventFunctions->emplace("create", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                const auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseButtonPressed)
+                {
+                    const auto transformComponent = entity->GetComponent<TransformComponent>();
+                    if (transformComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            std::string sid = entity->prototype->GetSID();
+                            if (sid.find("ui_") != std::string::npos)
+                            {
+                                sid.erase(sid.begin(), sid.begin() + 3);
+                            }
+                            Entity* newEntity = EntityManager::GetInstance().CreateEntity();
+                            newEntity->InitPrototype(sid);
+                            newEntity->InitFromPrototype();
+
+                            const auto newEvent = new EventReceiver("obj_move", ChannelEvent::Type::Mouse, newEntity);
+                            GameManager::GetInstance().GetEventDispatcher().JoinEvent(newEvent);
+
+                            const auto mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(GameManager::GetInstance().GetWindow()));
+                            const auto position = transformComponent->getPosition() - transformComponent->getOrigin();
+                            const sf::Vector2f newOrigin = { mousePos.x - position.x, mousePos.y - position.y };
+
+                            const auto newEntityTransformComponent = newEntity->GetComponent<TransformComponent>();
+                            newEntityTransformComponent->setOrigin(newOrigin);
+                            newEntityTransformComponent->setPosition(mousePos);
+
+                            auto newEntityDrawableComponent = newEntity->GetComponent<DrawableComponent>();
+                            newEntityDrawableComponent->zIndex = DrawableComponent::GetNewMaxIndexZ();
+                        }
+                    }
+                }
+                return false;
+            });
+
+        eventFunctions->emplace("bin", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseButtonReleased)
+                {
+                    Entity* activeEntity = EntityManager::GetInstance().GetActiveEntity(false);
+                    if (activeEntity && activeEntity->GetUID() != entity->GetUID())
+                    {
+                        const auto activeEntityCollisionComponent = activeEntity->GetComponent<CollisionComponent>();
+                        const auto collisionComponent = entity->GetComponent<CollisionComponent>();
+                        if (collisionComponent && activeEntityCollisionComponent)
+                        {
+                            if (activeEntityCollisionComponent->CheckCollision(collisionComponent))
+                            {
+                                GameManager::GetInstance().GetEventDispatcher().LeaveChannel(ChannelEvent::Type::All, activeEntity->GetUID());
+                                EntityManager::GetInstance().RemoveEntityByUID(activeEntity->GetUID());
+                            }
+                        }
+                    }
+                }
+                return false;
+            });
+
+        eventFunctions->emplace("ui_item_hoover", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseMoved)
+                {
+                    auto drawableComponent = entity->GetComponent<DrawableComponent>();
+                    if (drawableComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            if (drawableComponent->getColor() == sf::Color::White)
+                            {
+                                drawableComponent->setColor(sf::Color(120, 50, 100));
+                            }
+                        }
+                        else
+                        {
+                            drawableComponent->setColor(sf::Color::White);
+                        }
+                    }
+                }
+                return false;
+            });
+
+        eventFunctions->emplace("group_a", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                const auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseButtonPressed)
+                {
+                    const auto transformComponent = entity->GetComponent<TransformComponent>();
+                    if (transformComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            UIManager::GetInstance().ChangeVisibleItemTypes(EntityTypes::Basic);
+                        }
+                    }
+                }
+                return false;
+            });
+        eventFunctions->emplace("group_b", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                const auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseButtonPressed)
+                {
+                    const auto transformComponent = entity->GetComponent<TransformComponent>();
+                    if (transformComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            UIManager::GetInstance().ChangeVisibleItemTypes(EntityTypes::Advanced);
+                        }
+                    }
+                }
+                return false;
+            });
+
+        eventFunctions->emplace("operation_button", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                const auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseButtonPressed)
+                {
+                    const auto transformComponent = entity->GetComponent<TransformComponent>();
+                    if (transformComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            UIManager::GetInstance().NextOperation();
+                        }
+                    }
+                }
+                return false;
+            });
+        eventFunctions->emplace("button_up", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                const auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseButtonPressed)
+                {
+                    const auto transformComponent = entity->GetComponent<TransformComponent>();
+                    if (transformComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            UIManager::GetInstance().UpItemList();
+                        }
+                    }
+                }
+                return false;
+            });
+        eventFunctions->emplace("button_down", [](EventCaller* eventCaller, Event& inEvent)
+            {
+                const auto entity = dynamic_cast<Entity*>(eventCaller);
+                const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
+                if (entity && sfEvent && sfEvent->type == sf::Event::EventType::MouseButtonPressed)
+                {
+                    const auto transformComponent = entity->GetComponent<TransformComponent>();
+                    if (transformComponent)
+                    {
+                        if (entity->bActive)
+                        {
+                            UIManager::GetInstance().DownItemList();
                         }
                     }
                 }

@@ -8,5 +8,25 @@
 			"vpsh",
 			"watermelon"
 		]
+	},
+	"wind": {
+		"id": 1,
+		"operation": 2,
+		"result": "wind",
+		"elements":
+		[
+			"air",
+			"air"
+		]
+	},
+	"energy": {
+		"id": 2,
+		"operation": 2,
+		"result": "energy",
+		"elements":
+		[
+			"air",
+			"fire"
+		]
 	}
 }

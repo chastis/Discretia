@@ -19,25 +19,163 @@
 		"id": 2,
 		"texture": "socket",
 		"scale_to": {
-			"x": 200,
-			"y": 200
-		}
-	},
-	"flex": {
-		"id": 3,
-		"z_index": 2,
-		"texture": "flex",
-		"scale_to": {
-			"x": 200,
-			"y": 100
+			"x": 120,
+			"y": 120
 		}
 	},
 	"tie": {
-		"id": 4,
+		"id": 3,
 		"texture": "tie",
 		"scale_to": {
-			"x": 200,
-			"y": 200
+			"x": 100,
+			"y": 100
+		}
+	},
+	"flex": {
+		"id": 4,
+		"z_index": 2,
+		"texture": "flex",
+		"scale_to": {
+			"x": 250,
+			"y": 70
+		}
+	},
+	"button_up": {
+		"id": 5,
+		"z_index": 2,
+		"texture": "button_up",
+		"scale_to": {
+			"x": 100,
+			"y": 40
+		}
+	},
+	"button_down": {
+		"id": 6,
+		"z_index": 2,
+		"texture": "button_down",
+		"scale_to": {
+			"x": 100,
+			"y": 40
+		}
+	},
+	"group_a": {
+		"id": 7,
+		"z_index": 2,
+		"texture": "group_a",
+		"scale_to": {
+			"x": 70,
+			"y": 70
+		}
+	},
+	"group_b": {
+		"id": 8,
+		"z_index": 2,
+		"texture": "group_b",
+		"scale_to": {
+			"x": 70,
+			"y": 70
+		}
+	},
+	"bin": {
+		"id": 9,
+		"z_index": 2,
+		"texture": "bin",
+		"scale_to": {
+			"x": 70,
+			"y": 70
+		}
+	},
+	"union": {
+		"id": 10,
+		"z_index": 2,
+		"texture": "union",
+		"scale_to": {
+			"x": 150,
+			"y": 150
+		}
+	},
+	"symmetric_difference": {
+		"id": 11,
+		"z_index": 2,
+		"texture": "symmetric_difference",
+		"scale_to": {
+			"x": 150,
+			"y": 150
+		}
+	},
+	"intersection": {
+		"id": 12,
+		"z_index": 2,
+		"texture": "intersection",
+		"scale_to": {
+			"x": 150,
+			"y": 150
+		}
+	},
+	"complement": {
+		"id": 13,
+		"z_index": 2,
+		"texture": "complement",
+		"scale_to": {
+			"x": 150,
+			"y": 150
+		}
+	},
+	"absolute_complement": {
+		"id": 14,
+		"z_index": 2,
+		"texture": "absolute_complement",
+		"scale_to": {
+			"x": 150,
+			"y": 150
+		}
+	},
+	"air": {
+		"id": 15,
+		"texture": "air",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"earth": {
+		"id": 16,
+		"texture": "earth",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"energy": {
+		"id": 17,
+		"texture": "energy",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"fire": {
+		"id": 18,
+		"texture": "fire",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"water": {
+		"id": 19,
+		"texture": "water",
+		"scale_to": {
+			"x": 100,
+			"y": 100
+		}
+	},
+	"wind": {
+		"id": 20,
+		"texture": "wind",
+		"scale_to": {
+			"x": 100,
+			"y": 100
 		}
 	}
 }

@@ -15,8 +15,72 @@
 		"id": 3,
 		"useDrawable": true
 	},
-	"flex": {
+	"button_up": {
 		"id": 4,
+		"useDrawable": true
+	},
+	"button_down": {
+		"id": 5,
+		"useDrawable": true
+	},
+	"group_a": {
+		"id": 6,
+		"useDrawable": true
+	},
+	"group_b": {
+		"id": 7,
+		"useDrawable": true
+	},
+	"flex": {
+		"id": 8,
+		"useDrawable": true
+	},
+	"bin": {
+		"id": 9,
+		"useDrawable": true
+	},
+	"union": {
+		"id": 10,
+		"useDrawable": true
+	},
+	"symmetric_difference": {
+		"id": 11,
+		"useDrawable": true
+	},
+	"intersection": {
+		"id": 12,
+		"useDrawable": true
+	},
+	"complement": {
+		"id": 13,
+		"useDrawable": true
+	},
+	"absolute_complement": {
+		"id": 14,
+		"useDrawable": true
+	},
+	"earth": {
+		"id": 15,
+		"useDrawable": true
+	},
+	"energy": {
+		"id": 16,
+		"useDrawable": true
+	},
+	"air": {
+		"id": 17,
+		"useDrawable": true
+	},
+	"fire": {
+		"id": 18,
+		"useDrawable": true
+	},
+	"water": {
+		"id": 19,
+		"useDrawable": true
+	},
+	"wind": {
+		"id": 20,
 		"useDrawable": true
 	}
 }

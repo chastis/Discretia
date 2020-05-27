@@ -1,6 +1,18 @@
 #include <Core/EventSystem/EventDispatcher.h>
 #include <Core/Interfaces/UIDInterface.h>
 
+void EventDispatcher::DispatchFutureEvents()
+{
+    for (size_t i = 0; i < futureEvents.size(); ++i)
+    {
+        if (DispatchOnce(*futureEvents[i]))
+        {
+            futureEvents.erase(futureEvents.begin()+i);
+            --i;
+        }
+    }
+}
+
 void EventDispatcher::Dispatch(Event& inEvent)
 {
     std::map<ChannelEvent::Type, std::vector<EventReceiver*>> currentEvents;
@@ -37,6 +49,46 @@ void EventDispatcher::Dispatch(Event& inEvent)
             }
         }
     }
+}
+
+bool EventDispatcher::DispatchOnce(Event& inEvent)
+{
+    std::map<ChannelEvent::Type, std::vector<EventReceiver*>> currentEvents;
+
+    for (auto& eventChannel : events)
+    {
+        for (auto eventFunctionIt = eventChannel.second.begin(); eventFunctionIt != eventChannel.second.end(); ++eventFunctionIt)
+        {
+            if ((*eventFunctionIt)->bDirty)
+            {
+                eventFunctionIt = eventChannel.second.erase(eventFunctionIt);
+                if (eventFunctionIt==eventChannel.second.end())
+                    break;
+            }
+           
+        }
+    }
+
+    for (auto& eventChannel : events)
+    {
+        for (auto& eventFunction : eventChannel.second)
+        {
+            currentEvents[eventChannel.first].emplace_back(eventFunction.get());
+        }
+    }
+
+    for (auto& eventChannel : currentEvents)
+    {
+        for (auto& eventFunction : eventChannel.second)
+        {
+            if (eventFunction && !eventFunction->bDirty)
+            {
+                if (eventFunction->Receive(inEvent))
+                    return true;
+            }
+        }
+    }
+    return false;
 }
 
 void EventDispatcher::JoinEvent(EventReceiver* NewEvent)
@@ -93,4 +145,9 @@ void EventDispatcher::LeaveChannel(ChannelEvent::Type channelType, size_t ownerU
             }
         }
     }
+}
+
+void EventDispatcher::AddFutureEvent(Event* futureEvent)
+{
+    futureEvents.emplace_back(std::unique_ptr<Event>(futureEvent));
 }

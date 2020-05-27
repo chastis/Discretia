@@ -14,14 +14,16 @@ namespace ChannelEvent
         Application = 1 << 0,
         Keyboard = 1 << 1,
         Mouse = 1 << 2,
+        Custom = 1 << 3,
 
-        All = None | Application | Keyboard | Mouse
+        All = None | Application | Keyboard | Mouse | Custom
     };
 }
 
-enum class ObjectTypes
+enum class EntityTypes
 {
-    Basic = 0,
+    Core = 0,
+    Basic,
     Advanced
 };
 
