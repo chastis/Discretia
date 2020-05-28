@@ -419,9 +419,12 @@ void Entity::InitEventFunctions()
                             {
                                 drawableComponent->setColor(sf::Color(120, 50, 100));
                             }
+                            UIManager::GetInstance().AddTemporaryText(entity->GetComponent<DrawableComponent>()->GetPrototype().GetSID(), 
+                                static_cast<sf::Vector2f>(sf::Mouse::getPosition(GameManager::GetInstance().GetWindow())) - sf::Vector2f(-25, 25.f * GameManager::GetInstance().GetTotalScale().y));
                         }
                         else
                         {
+                            UIManager::GetInstance().RemoveTemporaryText(entity->GetComponent<DrawableComponent>()->GetPrototype().GetSID());
                             drawableComponent->setColor(sf::Color::White);
                         }
                     }

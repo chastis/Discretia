@@ -11,11 +11,11 @@ AttachComponent* Attacheable::GetAttachOwner() const
 
 bool AttachComponent::IsAttached()
 {
-    if (attached)
+    if (auto attachedShared = attached.lock())
     {
-        const auto attachComp =  attached->GetComponent<Attacheable>();
+        const auto attachComp =  attachedShared->GetComponent<Attacheable>();
         const auto myCollision = owner->GetComponent<CollisionComponent>();
-        const auto attachedCollision = attached->GetComponent<CollisionComponent>();
+        const auto attachedCollision = attachedShared->GetComponent<CollisionComponent>();
         if (myCollision && attachedCollision && attachComp)
         {
             if (myCollision->CheckCollision(attachedCollision))
@@ -25,19 +25,19 @@ bool AttachComponent::IsAttached()
             }
         }
     }
-    attached = nullptr;
+    attached.reset();
     return false;
 }
 
 bool AttachComponent::TryAttach(Entity* entity)
 {
-    if (!IsAttached() || entity->GetUID() == attached->GetUID())
+    if (!IsAttached() || entity->GetUID() == attached.lock()->GetUID())
     {
         if (!entity) return false;
         const auto attachComp =  entity->GetComponent<Attacheable>();
         if (!attachComp) return false;
         attachComp->attachedOwner = this;
-        attached = entity;
+        attached = entity->weak_from_this();
         return true;
     }
     return false;
@@ -46,5 +46,5 @@ bool AttachComponent::TryAttach(Entity* entity)
 Entity* AttachComponent::GetAttached()
 {
     IsAttached();
-    return attached;
+    return attached.lock().get();
 }

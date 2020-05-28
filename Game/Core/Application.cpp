@@ -71,6 +71,13 @@ void Application::InitEventFunctions()
                 const auto sfEvent = dynamic_cast<SFMLEvent*>(&inEvent);
                 if (application && sfEvent && sfEvent->type == sf::Event::EventType::Resized)
                 {
+
+                    if (static_cast<float>(sfEvent->size.width)/static_cast<float>(sfEvent->size.height) < 4.f/3.f)
+                    {
+                        sfEvent->size.width = static_cast<unsigned int>(4.f * sfEvent->size.height/3.f);
+                        application->window.setSize({ static_cast<unsigned int>(4.f * sfEvent->size.height/3.f), sfEvent->size.height });
+                    }
+
                     sf::FloatRect newViewport{
                     0.f, 0.f,
                     static_cast<float>(sfEvent->size.width),
@@ -135,8 +142,10 @@ void Application::Update()
 
     window.clear(sf::Color(50,50,50));
 
-    EntityManager::GetInstance().ActivateEntity();
+    window.draw(UIManager::GetInstance().GetBackground());
 
+    // mouse 
+    EntityManager::GetInstance().ActivateEntity();
 
     for (const auto& render : EntityManager::GetInstance().GetSortedEntities(false))
     {
@@ -153,8 +162,11 @@ void Application::Update()
             window.draw(*drawableComponent);
         }
     }
-
-    window.draw(UIManager::GetInstance().GetUIText());
+    for (auto& text : UIManager::GetInstance().GetUITexts())
+    {
+        window.draw(text);
+    }
+    
 
     window.display();
 }

@@ -11,7 +11,7 @@
 #include <memory>
 #include <vector>
 
-class CORE_API Entity : public Noncopyable,  public PrototypeableInterface<EntityPrototype>, public UIDInterface, public EventCaller
+class CORE_API Entity : public Noncopyable,  public PrototypeableInterface<EntityPrototype>, public UIDInterface, public EventCaller, public std::enable_shared_from_this<Entity>
 {
 public:
     void InitFromPrototype() override;

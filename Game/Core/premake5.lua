@@ -18,7 +18,8 @@ project "Core"
       INCLUDE_PATHS.SFML
    }
    libdirs {
-      TARGET_DIR
+      LIB_PATHS.SFML,
+      LIB_PATHS.SFML_EXTLIB
    }
 
    links {
@@ -35,7 +36,8 @@ project "Core"
    }
 
    defines {
-        "M42_CORE"
+        "M42_CORE",
+        "SFML_STATIC"
    }
 
    filter "configurations:Debug"
@@ -44,21 +46,32 @@ project "Core"
       runtime "Debug"
 
       links {
-         "sfml-graphics-d",
-         "sfml-window-d",
-         "sfml-system-d",
-         "sfml-audio-d",
-         "sfml-network-d"
+         "sfml-graphics-s-d",
+         "sfml-window-s-d",
+         "sfml-system-s-d",
+         "sfml-audio-s-d",
+         "sfml-network-s-d"
       }
 
-   filter "configurations:Release"
-      defines { "NDEBUG", "RELEASE"}
+   filter "configurations:Release or Dist"
+      defines { "NDEBUG"}
       optimize "On"
       runtime "Release"
       links {    
-         "sfml-graphics",
-         "sfml-window",
-         "sfml-system",
-         "sfml-audio",
-         "sfml-network"
+         "sfml-graphics-s",
+         "sfml-window-s",
+         "sfml-system-s",
+         "sfml-audio-s",
+         "sfml-network-s"
+      }
+
+   filter "configurations:Release"
+      defines { "RELEASE" }
+
+   filter "configurations:Dist"
+      targetdir (DIST_TARGET_DIR)
+      libdirs { LIB_PATHS.SFML_DIST }
+      defines
+      {
+          "DIST"
       }

@@ -13,21 +13,10 @@ project "Discretia"
       INCLUDE_PATHS.SFML
    }
    libdirs {
-      TARGET_DIR
+      LIB_PATHS.SFML
    }
 
    links {
-      "opengl32",
-      "freetype",
-      "winmm",
-      "gdi32",
-      "flac",
-      "vorbisenc",
-      "vorbisfile",
-      "vorbis",
-      "ogg",
-      "ws2_32",
-
       "Core"
    }
 
@@ -40,25 +29,24 @@ project "Discretia"
       defines { "DEBUG" }
       symbols "On"
       runtime "Debug"
-      links {
-         "sfml-graphics-d",
-         "sfml-window-d",
-         "sfml-system-d",
-         "sfml-audio-d",
-         "sfml-network-d"
-      }
 
-   filter "configurations:Release"
+   filter "configurations:Release or Dist"
       kind "WindowedApp"
-      defines { "NDEBUG", "RELEASE"}
+      defines { "NDEBUG"}
       optimize "On"
       runtime "Release"
 
       links {
-         "sfml-graphics",
-         "sfml-window",
-         "sfml-system",
-         "sfml-audio",
-         "sfml-network",
          "sfml-main"
+      }
+
+   filter "configurations:Release"
+      defines { "RELEASE" }
+   
+   filter "configurations:Dist"
+      targetdir (DIST_TARGET_DIR)
+      libdirs { LIB_PATHS.SFML_DIST }
+      defines
+      {
+          "DIST"
       }

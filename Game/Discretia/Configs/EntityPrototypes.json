@@ -466,5 +466,398 @@
 			[ 4, "create" ],
 			[ 4, "ui_item_hoover"]
 		]
+	},
+	"dust": 
+	{
+		"id": 30,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_dust": 
+	{
+		"id": 31,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"metal": 
+	{
+		"id": 32,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_metal": 
+	{
+		"id": 33,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"stone": 
+	{
+		"id": 34,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_stone": 
+	{
+		"id": 35,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"ashes": 
+	{
+		"id": 36,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_ashes": 
+	{
+		"id": 37,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"sound": 
+	{
+		"id": 38,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_sound": 
+	{
+		"id": 39,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"sand": 
+	{
+		"id": 40,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_sand": 
+	{
+		"id": 41,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"glass": 
+	{
+		"id": 42,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_glass": 
+	{
+		"id": 43,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"swamp": 
+	{
+		"id": 44,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_swamp": 
+	{
+		"id": 45,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"life": 
+	{
+		"id": 46,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_life": 
+	{
+		"id": 47,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"egg": 
+	{
+		"id": 48,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_egg": 
+	{
+		"id": 49,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"turtle": 
+	{
+		"id": 50,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_turtle": 
+	{
+		"id": 51,
+		"type": 2,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
+	},
+	"list": 
+	{
+		"id": 52,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent"
+		]
+	},
+	"lava": 
+	{
+		"id": 53,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent",
+			"Attacheable"
+		],
+		"events" :
+		[
+			[ 4, "obj_hoover" ],
+			[ 4, "obj_click" ]
+		]
+	},
+	"ui_lava": 
+	{
+		"id": 54,
+		"type": 1,
+		"components" : 
+		[ 
+			"DrawableComponent", 
+			"TransformComponent", 
+			"BoxCollisionComponent"
+		],
+		"events" :
+		[
+			[ 4, "create" ],
+			[ 4, "ui_item_hoover"]
+		]
 	}
 }

@@ -2,7 +2,7 @@
 
 #include <Core/Components/BaseComponent.h>
 #include <Core/CoreDefs.h>
-
+#include <memory>
 class Entity;
 
 class CORE_API Attacheable : public BaseComponent
@@ -21,6 +21,6 @@ public:
     bool TryAttach(Entity* entity);
     Entity* GetAttached();
 protected:
-   Entity* attached = nullptr;
+   std::weak_ptr<Entity> attached;
     
 };

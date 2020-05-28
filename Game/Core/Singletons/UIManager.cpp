@@ -56,6 +56,13 @@ void UIManager::Init()
         itemTypes.push_back(group);
     }
 
+    // list near groups
+
+    Entity* list = EntityManager::GetInstance().CreateEntity();
+    list->InitPrototype("list");
+    list->InitFromPrototype();
+    list->GetComponent<TransformComponent>()->setPosition(80, 60);
+
     // items
 
     ChangeActiveItems();
@@ -78,8 +85,17 @@ void UIManager::Init()
 
     text.setPosition(300, 20);
     text.setFillColor(sf::Color::White);
-    text.setString("You nothing create yet!");
+    text.setOutlineColor(sf::Color::Black);
+    text.setOutlineThickness(3.f);
+    text.setString("You had nothing created yet!");
     text.setStyle(sf::Text::Bold);
+
+    // bg
+
+    sf::Texture* bgTexture = AssetManager::GetInstance().GetTexture("background");
+    bg.setTexture(*bgTexture);
+    bg.setTextureRect({0, 0, static_cast<int>(bgTexture->getSize().x), static_cast<int>(bgTexture->getSize().y)});
+    bg.setColor(sf::Color(150, 150, 150));
 }
 
 void UIManager::ChangeVisibleItemTypes(EntityTypes newType)
@@ -144,17 +160,67 @@ void UIManager::NextOperation()
     ChangeSockets();
 }
 
-sf::Text UIManager::GetUIText()
+void UIManager::AddTemporaryText(std::string message, sf::Vector2f loc)
 {
-    sf::Text scaledText = text;
-    scaledText.setPosition(300 * GameManager::GetInstance().GetTotalScale().x + GameManager::GetInstance().GetTotalShift().x, 20 * GameManager::GetInstance().GetTotalScale().y);
-    scaledText.setCharacterSize(std::floor(25 * GameManager::GetInstance().GetTotalScale().x));
-    return scaledText;
+    for (auto& existingText : temporaryTexts)
+    {
+        if (existingText.getString() == message)
+        {
+            existingText.setPosition(loc);
+            return;
+        }
+    }
+    sf::Text newText;
+    newText.setFont(*AssetManager::GetInstance().GetFont());
+    newText.setCharacterSize(25);
+
+    newText.setPosition(loc);
+    newText.setFillColor(sf::Color::White);
+    newText.setOutlineColor(sf::Color::Black);
+    newText.setOutlineThickness(3.f);
+    newText.setString(message);
+    newText.setStyle(sf::Text::Bold);
+
+    temporaryTexts.push_back(newText);
 }
+
+void UIManager::RemoveTemporaryText(std::string message)
+{
+    for (auto text = temporaryTexts.begin(); text != temporaryTexts.end(); ++text)
+    {
+        if (text->getString() == message)
+        {
+            text = temporaryTexts.erase(text);
+            return;
+        }
+    }
+}
+
+std::vector<sf::Text> UIManager::GetUITexts()
+{
+    text.setPosition(300 * GameManager::GetInstance().GetTotalScale().x + GameManager::GetInstance().GetTotalShift().x, 20 * GameManager::GetInstance().GetTotalScale().y);
+    std::vector temp = temporaryTexts;
+    temp.push_back(text);
+    for (auto& a : temp)
+    {
+        a.setCharacterSize(static_cast<unsigned int>(std::floor(25 * GameManager::GetInstance().GetTotalScale().x)));
+    }
+    return temp;
+}
+
 
 void UIManager::SetTextLastCreation(std::string inText)
 {
-    text.setString("Last you create - " + inText);
+    text.setString("Your last creation - " + inText + "!");
+}
+
+sf::Sprite UIManager::GetBackground() const
+{
+    sf::Sprite correctBg = bg;
+    correctBg.setTextureRect({0,0, static_cast<int>(GameManager::GetInstance().GetWindow().getSize().x),
+        static_cast<int>(GameManager::GetInstance().GetWindow().getSize().y)
+    });
+    return correctBg;
 }
 
 void UIManager::ChangeActiveItems()
@@ -181,6 +247,8 @@ void UIManager::ChangeSockets()
         RightSocket = EntityManager::GetInstance().CreateEntity();
         RightSocket->InitPrototype("socket");
         RightSocket->InitFromPrototype();
+        RightSocket->GetComponent<DrawableComponent>()->InitPrototype("socket2");
+        RightSocket->GetComponent<DrawableComponent>()->InitFromPrototype();
         RightSocket->GetComponent<TransformComponent>()->setPosition(640 * GameManager::GetInstance().GetTotalScale().x + GameManager::GetInstance().GetTotalShift().x
             , 220 * GameManager::GetInstance().GetTotalScale().y);
     }
@@ -266,15 +334,20 @@ void UIManager::RecreateItems()
 
     std::vector<const EntityPrototype*> entityPrototypes = RecipeManager::GetInstance().GetKnownItems()[activeType];
 
+    if (entityPrototypes.empty())
+    {
+        return;
+    }
+
     const auto leftShift = (100.f * GameManager::GetInstance().GetTotalScale().x) + GameManager::GetInstance().GetTotalShift().x;
     const auto deltaShiftY = 20.f * GameManager::GetInstance().GetTotalScale().y;
-    auto currentDeltaShiftY = 60.f * GameManager::GetInstance().GetTotalScale().y;
+    auto currentDeltaShiftY = 80.f * GameManager::GetInstance().GetTotalScale().y;
 
     int i = currentItemStart;
-    i = i % static_cast<int>(maxItemsCount);
+    i = i % static_cast<int>(entityPrototypes.size());
     if (i < 0)
     {
-        i += static_cast<int>(maxItemsCount);
+        i += static_cast<int>(entityPrototypes.size());
     }
     for (size_t k = 0; k < maxItemsCount && k < entityPrototypes.size(); ++k, ++i)
     {
