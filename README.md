@@ -1,4 +1,5 @@
 # Discretia
-a lot of TODO
 
-![](demo.png)
+A SFML-based game
+
+![](demo.jpg)
