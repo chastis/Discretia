@@ -12,4 +12,4 @@ Game screenshot:
 For make solution file on Windows, just simple launch <generate_progects.bat>, if you use Linux or MacOS may God help you
 
 For better understanding code here is simplify class diagram 
-![](ClassDiagram.jpg)
+![](ClassDiagram.png)
